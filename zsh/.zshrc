@@ -7,7 +7,14 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 # theme settings
-ZSH_THEME="tjkirch"
+setopt PROMPT_PERCENT
+setopt PROMPT_SUBST
+PROMPT='[%n:%F{yellow}%25<..<%~%f%<<]$ '
+precmd() {
+    precmd() {
+        echo
+    }
+}
 
 # pluging settings
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
