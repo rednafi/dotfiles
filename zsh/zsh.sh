@@ -8,10 +8,6 @@
 # installing or updating zsh
 apt install zsh
 
-# making zsh the default Shell
-echo "Changing the default shell to zsh!"
-sudo chsh -s $(which zsh)
-
 # load profile from zprofile
 if grep -Fxq "[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'" ~/.zprofile
 then
