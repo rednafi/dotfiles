@@ -11,3 +11,9 @@
         sudo chown -R $USER:$USER ~/.ssh
         chmod -R 700 ~/.ssh
         ```
+
+* Execution order
+    * `zsh.sh`
+    * `manager.sh`
+    * `app.sh`
+    * `docker.sh`
