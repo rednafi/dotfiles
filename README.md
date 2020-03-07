@@ -4,7 +4,7 @@
    * Copy the backup private ssh keys into `~/.ssh` folder
    * Create public key from private key
       ```
-       ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+       $ ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
       ```
    * Change folder permission
         ```bash
@@ -12,7 +12,13 @@
         chmod -R 700 ~/.ssh
         ```
 
-* Execution order
+* Execute `.sh` files with the following command
+    ```bash
+     $ sudo chmod +x file.sh
+     $ ./file sh
+    ```
+
+    **Execution order**
     * `zsh.sh`
     * `manager.sh`
     * `app.sh`
