@@ -1,18 +1,14 @@
-# docker-compose version
-version: "3.3"
-
+version: "3.7"
 services:
-  # images
-mysql-dev:
-  image: mysql:5.7
-  environment:
-  MYSQL_ROOT_PASSWORD: password
-  MYSQL_DATABASE: test_db
-  ports:
-    - "3306:3306"
-  # making data persistent
-  volumes:
-    - db-data:/var/lib/mysql
 
-volumes:
-db-data:
+  mysql-dev:
+    image: mysql:5.7
+    environment:
+      # make a test user and database
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=test_db
+    ports:
+    - 3306:3306
+    volumes:
+    # save mysql data to your current working directory
+    - $PWD/db-data/mysql-data:/var/lib/mysql
