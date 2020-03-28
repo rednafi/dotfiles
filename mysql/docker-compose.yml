@@ -12,3 +12,6 @@ services:
     volumes:
     # save mysql data to your current working directory
     - $PWD/db-data/mysql-data:/var/lib/mysql
+
+volumes:
+  db-data/mysql-data
