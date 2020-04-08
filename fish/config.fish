@@ -10,4 +10,3 @@ set -x AREA_SEARCH_ENGINE "35.198.243.6"
 # !! Contents within this block are managed by 'conda init' !!
 eval /home/rednafi/miniconda3/bin/conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
-
