@@ -24,3 +24,14 @@
     * `app.sh`
     * `docker.sh`
 
+## Install Fish
+
+```bash
+!/bin/bash
+
+sudo apt install fish
+sudo chsh -s $(which fish)
+
+# theme pythonista custom
+cp -r ~/code/dotfiles/fish ~/.config
+```
