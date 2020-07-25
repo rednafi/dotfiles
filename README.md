@@ -16,7 +16,7 @@
     ```
 * If you've changed the username from `rednafi` to anything else, in that case you've to regenerate the public ssh key from the private key.
 
-    * First copy the `id_rsa` private key to the `~/.ssh` folder and change the permisison via the commands stated above. Then run:
+    First copy the `id_rsa` private key to the `~/.ssh` folder and change the permisison via the commands stated above. Then run:
 
     ```
     ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
