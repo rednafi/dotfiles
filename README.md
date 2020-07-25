@@ -2,13 +2,13 @@
 
 ## Restore SSH
 
-* Copy the backup ssh keys into the `~/.ssh` folder
+* Copy the backup ssh keys into the `~/.ssh` folder:
 
     ```
     cp -r backup_ssh_path/* ~/.ssh
     ```
 
-* Change folder permission
+* Change folder permission:
 
     ```
     sudo chown -R $USER:$USER ~/.ssh
@@ -22,22 +22,22 @@
     ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
     ```
 
-* Put all the database `*.pem` keys in the `~/.ssh` folder
+* Put all the database `*.pem` keys in the `~/.ssh` folder:
 
 ## Install Fish (From Bash/Zsh)
 
-* Install
+* Install:
 
     ```
     sudo apt install fish
     ```
 
-* Change shell
+* Change shell:
 
     ```
     sudo chsh -s $(which fish)
     ```
-* Copy the config (theme: *Pythonista custom*)
+* Copy the config (theme: *Pythonista custom*):
 
     ```
     cp -r ~/code/personal/dotfiles/fish ~/.config
