@@ -5,6 +5,7 @@ sudo apt install tmux
 ```
 prefix := `ctrl + B (release)`
 
+## General
 
 * `ctrl+b c` — (c)reate a new window
 
@@ -23,3 +24,14 @@ prefix := `ctrl + B (release)`
 * Hold `ctrl+b`, don’t release it and hold one of the `arrow keys` — resize pane
 
 * `ctrl + d` - exit pane/window
+
+
+## Copy
+
+* Enter ‘copy mode’ by pressing `ctrl+b [`.
+
+* Use the arrow keys to go to the position from where you want to start copying. Press `ctrl+space` to start copying.
+
+* Use arrow keys to go to the end of text you want to copy. Press  `ctrl+w` to copy into Tmux buffer.
+
+* Press `ctrl+b ]` to paste in a possibly different Tmux pane/window.
