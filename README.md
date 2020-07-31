@@ -62,3 +62,16 @@
     fc-cache -f -v
     ```
 
+## Install Micro
+
+* Install
+
+```
+sudo apt install micro
+```
+
+* Set terminal color to 256 bit
+
+```
+export TERM=xterm-256color
+```
