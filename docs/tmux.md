@@ -5,7 +5,7 @@ sudo apt install tmux
 ```
 prefix := `ctrl + b (release)`
 
-## General
+## Shortcuts
 
 ### Window
 * `ctrl+b c` — (c)reate a new window
