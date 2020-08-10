@@ -25,7 +25,7 @@ prefix := `ctrl + b (release)`
 * `ctrl +b d` - detach session
 * `ctrl + d` - exit session
 
-## Copy
+### Copy
 
 * Enter ‘copy mode’ by pressing `ctrl+b [`.
 * Use the arrow keys to go to the position from where you want to start copying.
