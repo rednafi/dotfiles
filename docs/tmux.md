@@ -27,9 +27,9 @@ prefix := `ctrl + b (release)`
 
 ### Copy
 
-* Enter ‘copy mode’ by pressing `ctrl+b [`.
-* Use the arrow keys to go to the position from where you want to start copying.
-Press `ctrl+space` to start copying.
-* Use arrow keys to go to the end of text you want to copy.
-Press  `ctrl+w` to copy into Tmux buffer.
-* Press `ctrl+b ]` to paste in a possibly different Tmux pane/window.
+* Enter ‘copy mode’ by pressing `ctrl+b [`
+* Use the arrow keys to go to the position from where you want to start copying
+Press `ctrl+space` to start copying
+* Use arrow keys to go to the end of text you want to copy
+Press  `ctrl+w` to copy into Tmux buffer
+* Press `ctrl+b ]` to paste in a possibly different Tmux pane/window
