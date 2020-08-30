@@ -53,14 +53,32 @@
     ```
     curl -OJL https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip
     ```
+    
 * Install:
     ```
     unzip ~/Fira_Code_v5.2.zip -d /usr/share/fonts
     ```
+    
 * Scan font directories in order to build font cache files:
     ```
     fc-cache -f -v
     ```
+
+## Fix Ubuntu Mirror Issues
+
+* Select mirror server from [here](https://launchpad.net/ubuntu/+archivemirrors).
+
+* Add mirror server to `/etc/apt/sources.list` and reboot. If the new mirror server isn't picked up by the OS, try commenting out other servers in the file. Here's a sample `sources.list` file:
+
+    ```
+    # deb http://apt.pop-os.org/proprietary focal main
+    # deb-src http://apt.pop-os.org/proprietary focal main
+    deb http://mirror.dhakacom.com/ubuntu/ focal main
+    deb-src http://mirror.dhakacom.com/ubuntu/ focal main
+    deb [arch=amd64] https://download.docker.com/linux/  ubuntu focal stable
+    # deb-src [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    ```
+
 
 ## Install Micro
 
