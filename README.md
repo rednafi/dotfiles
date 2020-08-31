@@ -45,6 +45,8 @@
 
 ## Install Fonts
 
+### Fira Code
+
 * Download (With `curl`):
     * `-O, --remote-name        Write output to a file named as the remote file`
     * `-J, --remote-header-name Use the header-provided filename`
@@ -53,22 +55,30 @@
     ```
     curl -OJL https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip
     ```
-    
+
 * Install:
     ```
-    unzip ~/Fira_Code_v5.2.zip -d /usr/share/fonts
+    unzip ./Fira_Code_v5.2.zip -d /usr/share/fonts
     ```
-    
+
 * Scan font directories in order to build font cache files:
     ```
     fc-cache -f -v
     ```
 
+### JetBrains Mono
+
+```
+$ curl -OJL https://download.jetbrains.com/fonts/JetBrainsMono-2.001.zip
+$ unzip ./JetBrainsMono-2.001.zip -d /usr/share/fonts
+$ fc-cache -f -v
+```
+
 ## Fix Ubuntu Mirror Issues
 
 * Select mirror server from [here](https://launchpad.net/ubuntu/+archivemirrors).
 
-* Add mirror server to `/etc/apt/sources.list` and reboot. If the new mirror server isn't picked up by the OS, try commenting out other servers in the file. Here's a sample `sources.list` file:
+* Add mirror server to `/etc/apt/sources.list` and reboot. If the new mirror server isn't picked up by the OS, try commenting out other servers in the file. Here's the tail of a `sources.list` file:
 
     ```
     # deb http://apt.pop-os.org/proprietary focal main
