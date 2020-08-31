@@ -89,6 +89,15 @@ $ fc-cache -f -v
     # deb-src [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
     ```
 
+## Fix Ctrl + Shift + E Hijacking in VSCode
+
+This happens due to an obscure setting in IBus. To solve this:
+
+* Run:
+    ```
+    ibus-setup
+    ```
+* Go to the `Emoji` tab and delete the shortcut for emoji-annotation.
 
 ## Install Micro
 
