@@ -78,7 +78,7 @@ $ fc-cache -f -v
 
 * Select mirror server from [here](https://launchpad.net/ubuntu/+archivemirrors).
 
-* Add mirror server to `/etc/apt/sources.list` and reboot. If the new mirror server isn't picked up by the OS, try commenting out other servers in the file. Here's the tail of a `sources.list` file:
+* Add mirror server to `/etc/apt/sources.list` and reboot. If the new mirror server isn't picked up by the OS, try selectively commenting out other servers in the file. Here's a sample `sources.list` file:
 
     ```
     # deb http://apt.pop-os.org/proprietary focal main
