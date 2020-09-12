@@ -1,9 +1,8 @@
+# fish specific
+funcsave fish_greeting
+
 # add snap path
 set -x PATH $PATH /snap/bin
-
-# server ip
-set -x ELOAN_SCORECARD "34.87.92.0"
-set -x AREA_SEARCH_ENGINE "35.198.243.6"
 
 # git
 set -x GIT_EDITOR "code --wait"
