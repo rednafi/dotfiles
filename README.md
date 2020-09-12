@@ -1,6 +1,13 @@
-# Dotfiles
+<div align="center">
+<h1>Dotfiles</h1>
+<h3>Debian Linux<h3>
+&nbsp;
+<img src="https://images.unsplash.com/photo-1505855788694-023053764ae5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1385&q=80" alt="containers" height="400" width="800">
 
-## Restore SSH
+&nbsp;
+</div>
+
+## 🔐 Restore SSH
 
 * Copy the backup ssh keys into the `~/.ssh` folder:
 
@@ -24,7 +31,7 @@
 
 * Put all the database `*.pem` keys in the `~/.ssh` folder.
 
-## Install Fish (From Bash / Zsh)
+## 🐟 Install Fish (From Bash / Zsh)
 
 * Install:
 
@@ -44,9 +51,9 @@
     cp -r ~/code/personal/dotfiles/fish ~/.config
     ```
 
-## Install Fonts
+## ⚙️ Install Fonts
 
-### Fira Code
+### 🔥 Fira Code
 
 * Download (With `curl`):
     * `-O, --remote-name        Write output to a file named as the remote file`
@@ -67,7 +74,7 @@
     fc-cache -f -v
     ```
 
-### JetBrains Mono
+### 🧠 JetBrains Mono
 
 ```
 $ curl -OJL https://download.jetbrains.com/fonts/JetBrainsMono-2.001.zip
@@ -75,7 +82,7 @@ $ unzip ./JetBrainsMono-2.001.zip -d /usr/share/fonts
 $ fc-cache -f -v
 ```
 
-## Fix Ubuntu Mirror Issues
+## 🪑 Fix Ubuntu Mirror Issues
 
 * Select mirror server from [here](https://launchpad.net/ubuntu/+archivemirrors).
 
@@ -90,7 +97,7 @@ $ fc-cache -f -v
     # deb-src [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
     ```
 
-## Fix Ctrl + Shift + E Hijacking in VSCode
+## 🪑 Fix Ctrl + Shift + E Hijacking in VSCode
 
 This happens due to an obscure setting in IBus. To solve this:
 
@@ -100,7 +107,7 @@ This happens due to an obscure setting in IBus. To solve this:
     ```
 * Go to the `Emoji` tab and delete the shortcut for emoji-annotation.
 
-## Install Tilix
+## ⚙️ Install Tilix
 
 * Install:
     ```
@@ -113,7 +120,7 @@ This happens due to an obscure setting in IBus. To solve this:
     sudo update-alternatives --config x-terminal-emulator
     ```
 
-## Basic Os Settings
+## 🕹️ Basic Os Settings
 
 * Change window zoom via `gnome-tweaks` to 1.20.
 * Terminal font         : JetBrains Mono Regular
