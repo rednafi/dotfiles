@@ -2,7 +2,7 @@
 <h1>Dotfiles</h1>
 <h3>Debian Linux<h3>
 &nbsp;
-<img src="https://images.unsplash.com/photo-1505855788694-023053764ae5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1385&q=80" alt="containers" height="400" width="800">
+<img src="https://images.unsplash.com/photo-1505855788694-023053764ae5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1385&q=80" alt="containers">
 
 &nbsp;
 </div>
