@@ -22,7 +22,7 @@
     ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
     ```
 
-* Put all the database `*.pem` keys in the `~/.ssh` folder:
+* Put all the database `*.pem` keys in the `~/.ssh` folder.
 
 ## Install Fish (From Bash / Zsh)
 
@@ -37,6 +37,7 @@
     ```
     sudo chsh -s $(which fish)
     ```
+
 * Copy the config (theme: *Pythonista custom*):
 
     ```
@@ -99,16 +100,21 @@ This happens due to an obscure setting in IBus. To solve this:
     ```
 * Go to the `Emoji` tab and delete the shortcut for emoji-annotation.
 
-## Install Micro
+## Install Tilix
 
-* Install
+* Install:
+    ```
+    sudo apt install tilix
+    ```
 
-```
-sudo apt install micro
-```
+* Set Tilix as default terminal:
 
-* Set terminal color to 256 bit
+    ```
+    sudo update-alternatives --config x-terminal-emulator
+    ```
 
-```
-export TERM=xterm-256color
-```
+## Basic Os Settings
+
+* Change window zoom via `gnome-tweaks` to 1.20.
+* Terminal font: JetBrains Mono Regular
+* Terminal font size: 17.5
