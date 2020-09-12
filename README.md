@@ -116,5 +116,6 @@ This happens due to an obscure setting in IBus. To solve this:
 ## Basic Os Settings
 
 * Change window zoom via `gnome-tweaks` to 1.20.
-* Terminal font: JetBrains Mono Regular
-* Terminal font size: 17.5
+* Terminal font         : JetBrains Mono Regular
+* Terminal font size    : 17.5
+* Tilix color profile   : Monokai
