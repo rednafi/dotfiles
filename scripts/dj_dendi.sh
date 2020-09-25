@@ -6,7 +6,7 @@
 # make sure your virtual environment's name is `.venv`
 
 
-set -euxo 
+set -euxo pipefail
 
 # Run the django server
 djrs="source .venv/bin/activate &&\
