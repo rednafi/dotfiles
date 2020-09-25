@@ -6,8 +6,6 @@
 # make sure your virtual environment's name is `.venv`
 
 
-set -euxo pipefail
-
 # Run the django server
 djrs="source .venv/bin/activate &&\
 watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- python manage.py runserver"
