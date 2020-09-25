@@ -1,9 +1,9 @@
 #!/bin/bash
 # Bash script to start a dendi project
 # prequisites :
-    # cd to your project's root folder (where the manage.py lives)
-    # install watchdog via `sudo apt install watchdog`
-    # make sure your virtual environment's name is `.venv`
+# cd to your project's root folder (where the manage.py lives)
+# install watchdog via `sudo apt install watchdog`
+# make sure your virtual environment's name is `.venv`
 
 # Run the django server
 djrs="source .venv/bin/activate &&\
