@@ -5,6 +5,9 @@
 # install watchdog via `sudo apt install watchdog`
 # make sure your virtual environment's name is `.venv`
 
+
+set -euxo 
+
 # Run the django server
 djrs="source .venv/bin/activate &&\
 watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- python manage.py runserver"
