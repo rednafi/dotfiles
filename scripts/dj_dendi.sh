@@ -5,7 +5,6 @@
 # install watchdog via `sudo apt install watchdog`
 # make sure your virtual environment's name is `.venv`
 
-
 # Run the django server
 djrs="source .venv/bin/activate &&\
 python manage.py runserver"
@@ -21,7 +20,6 @@ watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A 
 # Spawn the reports queue
 djq3="source .venv/bin/activate &&\
 watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q reports --concurrency=2 -l info"
-
 
 # Start all project's runners
 # the ;SHELL command keeps and holds the tabs open
