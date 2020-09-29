@@ -7,7 +7,7 @@
 
 # Run the django server
 djrs="source .venv/bin/activate &&\
-python manage.py runserver"
+watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- python manage.py runserver"
 
 # Spawn the default queue
 djq1="source .venv/bin/activate &&\
