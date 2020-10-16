@@ -7,9 +7,8 @@ sudo apt install software-properties-common
 # add deadsnakes ppa to your sources' list (When prompted press Enter to continue)
 sudo add-apt-repository ppa:deadsnakes/ppa
 
-# install python3.8
-sudo apt install python3.8
+# install python
+sudo apt install python3.7 python3.8 python3.9
 
 # verify python installation
-python3.8 --version
-
+python3.9 --version
