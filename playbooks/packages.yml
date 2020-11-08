@@ -1,0 +1,18 @@
+# Download apt packages using ansible
+
+- hosts: localhost
+  become: true
+  become_user: root
+  tasks:
+    - name: install packages
+      apt:
+        state: present
+        name:
+         - cowsay
+         - htop
+         - neofetch
+         - tmux
+      register: aptout
+
+    - debug:
+        var: aptout
