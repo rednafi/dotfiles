@@ -107,22 +107,9 @@ This happens due to an obscure setting in IBus. To solve this:
     ```
 * Go to the `Emoji` tab and delete the shortcut for emoji-annotation.
 
-## ⚙️ Install Tilix
-
-* Install:
-    ```
-    sudo apt install tilix
-    ```
-
-* Set Tilix as default terminal:
-
-    ```
-    sudo update-alternatives --config x-terminal-emulator
-    ```
 
 ## 🕹️ Basic Os Settings
 
 * Change window zoom via `gnome-tweaks` to 1.20.
 * Terminal font         : JetBrains Mono Regular
 * Terminal font size    : 17.5
-* Tilix color profile   : Monokai
