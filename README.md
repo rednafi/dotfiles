@@ -53,27 +53,6 @@
 
 ## ⚙️ Install Fonts
 
-### 🔥 Fira Code
-
-* Download (With `curl`):
-    * `-O, --remote-name        Write output to a file named as the remote file`
-    * `-J, --remote-header-name Use the header-provided filename`
-    * `-L, --location           Follow redirects`
-
-    ```
-    curl -OJL https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip
-    ```
-
-* Install:
-    ```
-    unzip ./Fira_Code_v5.2.zip -d /usr/share/fonts
-    ```
-
-* Scan font directories in order to build font cache files:
-    ```
-    fc-cache -f -v
-    ```
-
 ### 🧠 JetBrains Mono
 
 ```
