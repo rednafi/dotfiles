@@ -11,15 +11,15 @@ python manage.py runserver"
 
 # Spawn the default queue
 djq1="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -l info -Q default"
+watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q default -n default --loglevel=INFO"
 
 # Spawn the identifiers queue
 djq2="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q identifiers --concurrency=1 -l info"
+watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q identifiers  -n identifiers --loglevel=INFO --concurrency=1"
 
 # Spawn the reports queue
 djq3="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q reports --concurrency=2 -l info"
+watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=2"
 
 # Start all project's runners
 # the ;SHELL command keeps and holds the tabs open
