@@ -1,16 +1,16 @@
-# fish specific
+# Fish specific
 funcsave fish_greeting
 
-# add snap path
+# Add snap path
 set -x PATH $PATH /snap/bin
 
-# add go path
+# Add go path
 set -x PATH $PATH:/usr/local/go/bin
 
-# git
+# Git
 set -x GIT_EDITOR 'code --wait'
 
-# alias
+# Alias
 alias dj_dendi="curl -s https://raw.githubusercontent.com/rednafi/dotfiles/master/scripts/dj_dendi.sh | bash"
 
 alias upgrade="sudo apt update && sudo apt upgrade"
