@@ -51,7 +51,7 @@
     cp -r ~/code/personal/dotfiles/fish ~/.config
     ```
     
-## Ctrl+Tab & Ctrl+Shift+Tab to Switch Between Gnome Terminal
+## Ctrl+Tab & Ctrl+Shift+Tab to Switch Between Gnome Terminal Tabs
 
 ```
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab' && 
