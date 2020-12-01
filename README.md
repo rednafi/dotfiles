@@ -50,6 +50,13 @@
     ```
     cp -r ~/code/personal/dotfiles/fish ~/.config
     ```
+    
+## Ctrl+Tab & Ctrl+Shift+Tab to Switch Between Gnome Terminal
+
+```
+gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab' && 
+gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
+```
 
 ## ⚙️ Install Fonts
 
