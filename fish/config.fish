@@ -10,15 +10,23 @@ set -x PATH $PATH:/usr/local/go/bin
 # Git
 set -x GIT_EDITOR 'code --wait'
 
-# Alias
+# Aliases
+
+## Dendi
 alias dj_dendi="curl -s https://raw.githubusercontent.com/rednafi/dotfiles/master/scripts/dj_dendi.sh | bash"
 
-alias upgrade="sudo apt update && sudo apt upgrade"
-alias pkill="pkill -ecfi"
-alias pidof="pidof -xz"
-alias www="python3 -m http.server 6666"
-alias ls="ls --group-directories-first --color=auto"
 
+## Unix magics
+alias cp="cp -i"
+alias hs="history|grep"
+alias ls="ls --group-directories-first --color=auto"
+alias mv="mv -i"
+alias pidof="pidof -xz"
+alias ping="ping -c5"
+alias pkill="pkill -ecfi"
+alias rm="rm -i"
+alias update="sudo apt update && sudo apt upgrade"
+alias www="python3 -m http.server 8001"
 
 
 # # >>> conda initialize >>>
