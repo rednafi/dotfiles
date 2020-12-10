@@ -8,7 +8,7 @@ set -x PATH $PATH /snap/bin
 set -x PATH $PATH:/usr/local/go/bin
 
 # Git
-set -x GIT_EDITOR 'code --wait'
+set -x GIT_EDITOR "code --wait"
 
 # Aliases
 
@@ -16,13 +16,20 @@ set -x GIT_EDITOR 'code --wait'
 alias dj_dendi="curl -s https://raw.githubusercontent.com/rednafi/dotfiles/master/scripts/dj_dendi.sh | bash"
 
 ## Git
-alias gacp="git add . && git commit -m"
+alias ga="git add ."
+alias gac="git add . && git commit -m "
 alias gp="git push origin HEAD"
 
 # Run any command on the unstaged files. Example --
 # ondirty black && ondirty isort && only whatever.
 function ondirty
-    command git status -s | grep 'M' | awk '{print $2}' | xargs $argv
+    command git status -s | grep 'M' | egrep '*.py' | awk '{print $2}' | xargs $argv
+end
+
+# Run any command on the unstaged files. Example --
+# onclean black && onclean isort && only whatever.
+function onclean
+    command git status -s | grep '??' | egrep '*py' | awk '{print $2}' | xargs $argv
 end
 
 ## Unix magics
