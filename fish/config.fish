@@ -20,20 +20,25 @@ alias ga="git add ."
 alias gac="git add . && git commit -m "
 alias gp="git push origin HEAD"
 
-# Run any command on the unstaged files. Example --
-# ondirty black && ondirty isort && only whatever.
-function ondirty
-    command git status -s | grep 'M' | egrep '*.py' | awk '{print $2}' | xargs $argv
+## Python
+# Run any command on the unstaged files.
+function pylint
+    echo "Applying black..."
+    echo "================="
+    echo
+    command git status -s | grep '.py$' | awk '{print $2}' | xargs black
+    echo
+
+    echo "Applying isort..."
+    echo "================="
+    echo
+    command git status -s | grep '.py$' | awk '{print $2}' | xargs isort
+    echo
 end
 
-# Run any command on the unstaged files. Example --
-# onclean black && onclean isort && only whatever.
-function onclean
-    command git status -s | grep '??' | egrep '*py' | awk '{print $2}' | xargs $argv
-end
 
 ## Unix magics
-alias sudo="sudo"
+alias sudo="sudo "
 alias cp="cp -i"
 alias hs="history|grep"
 alias ls="ls --group-directories-first --color=auto"
