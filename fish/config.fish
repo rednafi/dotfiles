@@ -47,7 +47,7 @@ alias pidof="pidof -xz"
 alias ping="ping -c5"
 alias pkill="pkill -ecfi"
 alias rm="rm -i"
-alias update="sudo apt update && sudo apt upgrade"
+alias update="apt list --upgradable | column -t | awk '{print $1'\t'$2'\t'$6}' | column -t | tr -d '' ']' && sudo apt update && sudo apt upgrade"
 alias www="python3 -m http.server 8001"
 
 
