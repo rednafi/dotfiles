@@ -11,15 +11,20 @@ python manage.py runserver"
 
 # Spawn the default queue
 djq1="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q default -n default --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q default -n default --loglevel=INFO --concurrency=1"
 
 # Spawn the identifiers queue
 djq2="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q identifiers  -n identifiers --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q identifiers  -n identifiers --loglevel=INFO --concurrency=1"
 
 # Spawn the reports queue
 djq3="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --recursive -- celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=1"
+
+# Spawn the reports queue
+djq4="source .venv/bin/activate &&\
+watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q orders -n orders --loglevel=INFO --concurrency=1"
+
 
 # Start all project's runners
 # the ;SHELL command keeps and holds the tabs open
