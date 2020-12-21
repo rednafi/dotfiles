@@ -11,19 +11,28 @@ python manage.py runserver"
 
 # Spawn the default queue
 djq1="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q default -n default --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py' \
+--ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
+celery -A main worker -Q default -n default --loglevel=INFO --concurrency=1"
 
 # Spawn the identifiers queue
 djq2="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q identifiers  -n identifiers --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py'\
+--ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
+celery -A main worker -Q identifiers  -n identifiers --loglevel=INFO --concurrency=1"
 
 # Spawn the reports queue
 djq3="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=1"
+watchmedo auto-restart --directory=./ --pattern='*.py' \
+--ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
+celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=1"
 
 # Spawn the reports queue
-djq4="source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- celery -A main worker -Q orders -n orders --loglevel=INFO --concurrency=1"
+djq4="cd ../bulk_ordering_platform/ &&\
+source .venv/bin/activate &&\
+watchmedo auto-restart --directory=./ --pattern='*.py' \
+--ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
+celery -A main worker -Q orders -n orders --loglevel=INFO --concurrency=1"
 
 
 # Start all project's runners
@@ -33,6 +42,7 @@ proj() {
     gnome-terminal --tab --title="CeleryQ: default" -- bash -ic "$djq1;$SHELL"
     gnome-terminal --tab --title="CeleryQ: identifiers" -- bash -ic "$djq2;$SHELL"
     gnome-terminal --tab --title="CeleryQ: reports" -- bash -ic "$djq3;$SHELL"
+    gnome-terminal --tab --title="CeleryQ: bop_orders" -- bash -ic "$djq4;$SHELL"
 }
 
 proj
