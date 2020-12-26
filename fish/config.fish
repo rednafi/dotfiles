@@ -47,8 +47,19 @@ alias pidof="pidof -xz"
 alias ping="ping -c5"
 alias pkill="pkill -ecfi"
 alias rm="rm -i"
-alias update="apt list --upgradable | column -t | awk '{print $1'\t'$2'\t'$6}' | column -t | tr -d '' ']' && sudo apt update && sudo apt upgrade"
+alias update="sudo apt update && sudo apt upgrade"
 alias www="python3 -m http.server 8001"
+
+## Docker
+function runredis
+    echo "Spinning up a Redis container..."
+    echo "================================"
+    echo
+    command docker stop dev-redis
+    command docker rm dev-redis
+    command docker run --name dev-redis -d -h localhost -p 6379:6379 redis:alpine
+    echo
+end
 
 
 # # >>> conda initialize >>>
