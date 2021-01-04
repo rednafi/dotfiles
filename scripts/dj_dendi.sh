@@ -27,12 +27,12 @@ watchmedo auto-restart --directory=./ --pattern='*.py' \
 --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
 celery -A main worker -Q reports -n reports --loglevel=INFO --concurrency=1"
 
-# Spawn the bop orders queue
-djq4="cd ../bulk_ordering_platform/ &&\
-source .venv/bin/activate &&\
-watchmedo auto-restart --directory=./ --pattern='*.py' \
---ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
-celery -A main worker -Q orders -n orders --loglevel=INFO --concurrency=1"
+# # Spawn the bop orders queue
+# djq4="cd ../bulk_ordering_platform/ &&\
+# source .venv/bin/activate &&\
+# watchmedo auto-restart --directory=./ --pattern='*.py' \
+# --ignore-patterns='./.venv/*; ./*/migrations/*' --recursive -- \
+# celery -A main worker -Q orders -n orders --loglevel=INFO --concurrency=1"
 
 
 # Start all project's runners
