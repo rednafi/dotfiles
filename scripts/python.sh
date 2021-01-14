@@ -1,14 +1,43 @@
 #!/bin/bash
 
-# update the packages list and install the prerequisites
-sudo apt update
-sudo apt install software-properties-common
+# Bash error handling.
+set -euo pipefail
 
-# add deadsnakes ppa to your sources' list (When prompted press Enter to continue)
-sudo add-apt-repository ppa:deadsnakes/ppa
+# Mention the versions of Python to be installed. Add versions as space seperated
+# strings
+PYTHON_VERSIONS=(3.6 3.7 3.8 3.9)
 
-# install python
-sudo apt install python3.7 python3.8 python3.9
 
-# verify python installation
-python3.9 --version
+# Update the package-list and install the prerequisites.
+sudo apt -y update
+sudo apt -y autoremove
+sudo apt -y install software-properties-common
+
+# Add deadsnakes PPA to your sources' list.
+sudo add-apt-repository -y ppa:deadsnakes/ppa
+
+
+# Install Python.
+echo "Installing Python..."
+echo "===================="
+echo
+for v in ${PYTHON_VERSIONS[@]}
+do
+    echo "  Installing Python $v..."
+    echo "  -------------------------"
+    echo
+    sudo apt install -y python$v
+    echo
+done
+echo
+
+
+# Verify Python installation.
+echo "Verifying Python versions..."
+echo "============================"
+echo
+for v in ${PYTHON_VERSIONS[@]}
+do
+    python$v --version
+done
+echo
