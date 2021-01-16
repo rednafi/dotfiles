@@ -72,8 +72,16 @@ function start_rabbit
     echo "==================================="
     echo
     stop_rabbit
-    command docker run -d -h localhost --hostname my-rabbit --name dev-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
-
+    command docker run -d                       \
+            --hostname my-rabbit                \
+            --name dev-rabbit                   \
+            -p 15672:15672                      \
+            -p 5672:5672                        \
+            --memory 512m                       \
+            -e RABBITMQ_DEFAULT_USER=ubuntu     \
+            -e RABBITMQ_DEFAULT_PASS=debian     \
+            -e RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.8 \
+            rabbitmq:3-management
     echo
 end
 
