@@ -51,16 +51,38 @@ alias update="sudo apt update && sudo apt upgrade"
 alias www="python3 -m http.server 8001"
 
 ## Docker
-function runredis
+function start_redis
     echo "Spinning up a Redis container..."
     echo "================================"
     echo
-    command docker stop dev-redis
-    command docker rm dev-redis
+    stop_redis
     command docker run --name dev-redis -d -h localhost -p 6379:6379 redis:alpine
     echo
 end
 
+function stop_redis
+    echo
+    command docker stop dev-redis
+    command docker rm dev-redis
+    echo
+end
+
+function start_rabbit
+    echo "Spinning up a Rabbitmq container..."
+    echo "==================================="
+    echo
+    stop_rabbit
+    command docker run -d -h localhost --hostname my-rabbit --name dev-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
+    echo
+end
+
+function stop_rabbit
+    echo
+    command docker stop dev-rabbit
+    command docker rm dev-rabbit
+    echo
+end
 
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
