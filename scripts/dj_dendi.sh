@@ -5,6 +5,9 @@
 # install watchdog via `sudo apt install watchdog`
 # make sure your virtual environment's name is `.venv`
 
+# Bash strict mode
+set -euo pipefail
+
 # Run the django server
 djrs="source .venv/bin/activate &&\
 python manage.py runserver"
