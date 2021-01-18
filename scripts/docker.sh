@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Added bash strict mode.
+set -euo pipefail
 
 # Uninstall old version.
 sudo apt-get remove docker docker-engine docker.io containerd runc
