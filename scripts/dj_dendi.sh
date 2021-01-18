@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Bash script to start a dendi project
 # prequisites :
 # cd to your project's root folder (where the manage.py lives)
