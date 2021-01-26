@@ -39,14 +39,14 @@ end
 
 ## Unix magics
 alias sudo="sudo "
-alias cp="cp -i"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
 alias hs="history|grep"
 alias ls="ls --group-directories-first --color=auto"
-alias mv="mv -i"
 alias pidof="pidof -xz"
 alias ping="ping -c5"
 alias pkill="pkill -ecfi"
-alias rm="rm -i"
 alias update="sudo apt update && sudo apt upgrade"
 alias www="python3 -m http.server 8001"
 
