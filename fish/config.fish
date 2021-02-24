@@ -19,6 +19,7 @@ alias dj_dendi="curl -s https://raw.githubusercontent.com/rednafi/dotfiles/maste
 alias ga="git add ."
 alias gac="git add . && git commit -m "
 alias gp="git push origin HEAD"
+alias brclr="git branch | grep -Ev 'master|staging' | xargs -I {} git branch -D '{}'"
 
 ## Python
 # Run any command on the unstaged files.
