@@ -36,7 +36,7 @@ alias ls="ls --group-directories-first --color=auto"
 alias pidof="pidof -xz"
 alias ping="ping -c5"
 alias pkill="pkill -ecfi"
-alias update="sudo apt update && sudo apt upgrade && sudo apt autoremove"
+alias update="sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove"
 alias www="python3 -m http.server 8001"
 
 
