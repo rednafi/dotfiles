@@ -8,6 +8,7 @@ set -x PATH $PATH /snap/bin
 
 # Adds go path
 set -x PATH $PATH:/usr/local/go/bin
+set -x PATH $PATH:$HOME/go/bin
 
 
 # Git
