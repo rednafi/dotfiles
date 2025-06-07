@@ -1,0 +1,205 @@
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[user]
+    name = rednafi
+    email = redowan.delowar@wolt.com
+    signingkey = 3AE3F1EC5542FEFF
+
+[core]
+    editor = code --wait
+    pager = delta
+
+[color]
+    ui = true
+
+[grep]
+    lineNumber = true
+
+[init]
+    defaultBranch = main
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgsign = true
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+
+[diff]
+    algorithm = histogram
+
+[push]
+    autoSetupRemote = true
+
+[branch]
+    sort = -committerdate
+
+[merge]
+    conflictstyle = zdiff3
+
+[alias]
+    stash = stash push --include-untracked
+
+[includeIf "gitdir:/Users/rednafi/canvas/personal/"]
+    path = /Users/rednafi/canvas/personal/.gitconfig
+[safe]
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
+	directory = /Users/rednafi/canvas/taulu
