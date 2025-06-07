@@ -1,0 +1,5 @@
+github.com:
+    user: rednafi
+    git_protocol: ssh
+    users:
+        rednafi:
