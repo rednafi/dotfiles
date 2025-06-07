@@ -1,0 +1,66 @@
+##########################################
+# Aliases
+##########################################
+
+# Git: Clear branches except current, 'main', 'master', 'staging'.
+alias ,brclr="\
+    git branch | grep -vwE 'main|master|staging|development' | xargs git branch -D"
+
+## Unix
+alias sudo="sudo "
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias ls="ls -G"
+alias python="python3.13"
+
+
+# Docker
+alias ,docker-prune-containers='\
+    docker stop $(docker ps -aq) 2> /dev/null && docker rm $(docker ps -aq) 2> /dev/null'
+alias ,docker-prune-images='docker rmi --force $(docker images -q) || true'
+alias ,docker-prune-volumes='docker system prune -af --volumes'
+alias ,docker-nuke="\
+    ,docker-prune-containers && ,docker-prune-images && ,docker-prune-volumes"
+
+
+# Doordash / wolt
+alias tk="tsh kubectl"
+,cup() {
+    local container_name="cassandra-cup"
+    local host_port=9043
+    local container_port=9042
+
+    if docker ps -q -f name="^/${container_name}$" | grep -q .; then
+        echo "Cassandra container '$container_name' is already running."
+    else
+        echo "Starting Cassandra on port $host_port..."
+        docker run -d --rm \
+            --name "$container_name" \
+            -e CASSANDRA_USER=cassandra \
+            -e CASSANDRA_PASSWORD=cassandra \
+            -p "$host_port:$container_port" \
+            bitnami/cassandra:latest
+
+        echo "Waiting for Cassandra to accept CQL connections..."
+        until docker logs "$container_name" 2>&1 | grep -q "Starting listening for CQL clients"; do
+            sleep 2
+        done
+    fi
+
+    echo "Connecting with cqlsh..."
+    docker run -it --rm \
+        --network container:"$container_name" \
+        bitnami/cassandra:latest \
+        cqlsh 127.0.0.1 "$container_port" -u cassandra -p cassandra
+}
+
+
+alias ,cdown="docker rm -f cassandra-cup"
+
+
+# Misc
+alias ,clear-cache='sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches \
+    && sudo rm -rf /var/tmp'
+
+alias ,www="python3 -m http.server 6969"
