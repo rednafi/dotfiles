@@ -1,0 +1,10 @@
+theme = "catppuccin-mocha"
+font-family = "JetBrains Mono"
+font-size = 20
+font-thicken = true
+
+# Background configuration
+background-opacity = 0.95
+background-blur-radius = 20
+
+shell-integration = fish

@@ -1,0 +1,122 @@
+# ==============================
+# ZSH CONFIGURATION
+# ==============================
+
+# Uncomment to profile startup time
+# zmodload zsh/zprof
+
+# ==============================
+# PROMPT & KEY BINDINGS
+# ==============================
+
+# Set the prompt
+precmd() { print }
+PS1="%{%F{yellow}%}%n@%{%f%}%{%F{yellow}%}%m:%{%F{cyan}%}% %(5~|%-1~/.../%3~|%4~)
+%{%f%}$ "
+
+# Key bindings and color settings
+bindkey -e
+export CLICOLOR=1
+
+# ==============================
+# HISTORY SETTINGS
+# ==============================
+
+# History options
+setopt EXTENDED_HISTORY       # Save timestamp of command
+setopt SHARE_HISTORY         # Share history between sessions
+setopt INC_APPEND_HISTORY    # Append to history immediately
+setopt HIST_IGNORE_ALL_DUPS  # Don't record duplicates
+setopt HIST_REDUCE_BLANKS    # Remove unnecessary blanks
+setopt HIST_IGNORE_DUPS      # Don't record duplicates
+setopt HIST_IGNORE_SPACE     # Don't record commands starting with space
+setopt HIST_VERIFY           # Show command with history expansion to user before running it
+setopt HIST_BEEP             # Beep when accessing non-existent history
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history
+setopt HIST_FIND_NO_DUPS     # Do not display a line previously found
+setopt HIST_SAVE_NO_DUPS     # Don't write duplicate entries in the history file
+
+# History size settings
+HISTSIZE=10000              # Number of commands to keep in memory
+SAVEHIST=1000000           # Number of commands to save to disk
+HISTFILE=~/.zsh_history    # Where to save history to disk
+
+
+# ==============================
+# PLUGINS
+# ==============================
+
+# Directory for plugins
+zsh_plugins_dir="$HOME/.zsh_plugins"
+github_plugins=(
+    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-history-substring-search
+    zsh-users/zsh-completions
+    zsh-users/zsh-syntax-highlighting  # Must be last
+)
+
+# Clone and load plugins
+for plugin in $github_plugins; do
+    plugin_dir="$zsh_plugins_dir/$plugin"
+    if [[ ! -d $plugin_dir ]]; then
+        mkdir -p "$plugin_dir"
+        git clone --depth 1 "https://github.com/$plugin.git" "$plugin_dir" &> /dev/null
+    fi
+    source "$plugin_dir/${plugin#*/}.plugin.zsh" &> /dev/null || true
+done
+
+# ==============================
+# COMPLETION SETTINGS
+# ==============================
+
+# Case-insensitive and substring matching for completion
+zstyle ':completion:*' matcher-list \
+    'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+
+# Show completion menu on second tab press
+zstyle ':completion:*' menu select
+
+# Additional completion settings
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Colored completion
+zstyle ':completion:*' group-name ''                   # Group completion results
+zstyle ':completion:*' verbose yes                     # Show completion descriptions
+zstyle ':completion:*' use-compctl false              # Use new completion system
+zstyle ':completion:*' rehash true                    # Automatically rehash commands
+zstyle ':completion:*' accept-exact '*(N)'            # Accept exact matches
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR      # Cache completion results
+
+# Completion for specific commands
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
+# Load direnv
+eval "$(direnv hook zsh)"
+
+# ==============================
+# ENVIRONMENT & PATH
+# ==============================
+
+# Load aliases and environment variables
+source ~/.zsh_aliases
+source ~/.zshenv
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste up-line-or-search down-line-or-search expand-or-complete accept-line push-line-or-edit)
+
+
+# PATH configuration
+export PATH="/opt/homebrew/bin:$HOME/.local/share/uv/python:/opt/homebrew/opt/sqlite/bin:\
+/opt/homebrew/opt/coreutils/libexec/gnubin:$HOME/go/bin:$PATH"
+
+# Editor configuration
+export EDITOR="micro"
+export VISUAL="code --wait"
+
+# CD path for quick navigation
+CDPATH="$CDPATH:$HOME/canvas"
+
+# Uncomment to see profiling results
+#zprof
+
+ZSH_CACHE_DIR="$HOME/.zsh_cache"
+mkdir -p "$ZSH_CACHE_DIR"
