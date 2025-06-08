@@ -1,14 +1,14 @@
 # dotfiles
 
-I used to rely on [GNU Stow] to wrangle my dotfiles, but once I added a few more laptops and dev VMs, the maze of
-symlinks became a headache. I’m now giving [chezmoi] a whirl to see if it scales better. So far, so good!
+I used to rely on [GNU Stow] to [wrangle my dotfiles], but once I added a few more laptops and dev VMs, the maze of
+symlinks became a headache. I'm now giving [chezmoi] a whirl to see if it scales better. So far, so good!
 
 
 ## Basic concepts
 
-| Term             | What it really means                                                                                     |
+| Term             | What it really means                                                                                      |
 | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| **source**       | Chez­moi's *single source of truth* (default: `~/.local/share/chezmoi`). It's just a Git repo.            |
+| **source**       | Chez­moi's *single source of truth* (default: `~/.local/share/chezmoi`). It's just a Git repo.             |
 | **destination**  | Your real home directory (or wherever a file ultimately lives). Files flow **source ➜ destination**.      |
 | `add`            | Copy an existing file from destination *into* source and stage it for Git.                                |
 | `forget`         | Remove a file from source but leave the destination copy untouched.                                       |
@@ -52,3 +52,4 @@ That's it — **init → dry-run → apply → add/forget → push**.
 
 [gnu stow]: https://www.gnu.org/software/stow/
 [chezmoi]: https://www.chezmoi.io/
+[wrangle my dotfiles]: https://rednafi.com/misc/dotfile_stewardship_for_the_indolent/
