@@ -1,3 +1,5 @@
+# -*- mode: shell -*-
+
 # Allow opening any 'source'd file, even if not specified as input
 external-sources=true
 
