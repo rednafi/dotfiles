@@ -1,2 +1,3 @@
 README.md
-dot_config/fish/fish_variables
+.config/fish/fish_variables
+.config/fish/conf.d/secret.fish
