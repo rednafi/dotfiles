@@ -44,5 +44,5 @@ if status is-interactive
     # Start a local web server on port 6969
     alias ,www="python3 -m http.server 6969"
 
-    bind \cr fish_history_search
+    bind \cr history_search
 end
