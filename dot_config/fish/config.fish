@@ -18,8 +18,7 @@ if status is-interactive
 
     # --- Docker Aliases ---
     # Stop and remove all containers
-    abbr ,docker-prune-containers '\
-        docker stop $(docker ps -aq) 2> /dev/null && docker rm $(docker ps -aq) 2> /dev/null'
+    abbr ,docker-prune-containers 'docker stop $(docker ps -aq) 2> /dev/null && docker rm $(docker ps -aq) 2> /dev/null'
 
     # Force-remove all images
     abbr ,docker-prune-images 'docker rmi --force $(docker images -q) || true'
@@ -28,8 +27,7 @@ if status is-interactive
     abbr ,docker-prune-volumes 'docker system prune -af --volumes'
 
     # Run all Docker prune steps
-    abbr ,docker-nuke "\
-        ,docker-prune-containers && ,docker-prune-images && ,docker-prune-volumes"
+    abbr ,docker-nuke ",docker-prune-containers && ,docker-prune-images && ,docker-prune-volumes"
 
     # --- Wolt / Doordash Dev Tools ---
     # Kubernetes shortcut via tsh
@@ -37,9 +35,7 @@ if status is-interactive
 
     # --- Misc Tools ---
     # Clear user and tmp caches (macOS specific)
-    abbr ,clear-cache '\
-        sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches \
-        && sudo rm -rf /var/tmp'
+    abbr ,clear-cache 'sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches && sudo rm -rf /var/tmp'
 
     # Start a local web server on port 6969
     abbr ,www "python3 -m http.server 6969"
