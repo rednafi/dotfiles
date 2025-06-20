@@ -41,7 +41,9 @@ if status is-interactive
     abbr ,www "python3 -m http.server 6969"
 
     bind \cr history_search
+
+    set -gx GOPATH $HOME/go
+    set -gx PATH $GOPATH/bin $PATH
+    
 end
 
-set -gx GOPATH $HOME/go
-set -gx PATH $GOPATH/bin $PATH
