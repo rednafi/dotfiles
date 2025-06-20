@@ -40,10 +40,6 @@ if status is-interactive
     # Start a local web server on port 6969
     abbr ,www "python3 -m http.server 6969"
 
-    bind \cr history_search
-
-    set -gx GOPATH $HOME/go
-    set -gx PATH $GOPATH/bin $PATH
-    
+    bind \cr history_search    
 end
 
