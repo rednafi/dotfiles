@@ -42,3 +42,6 @@ if status is-interactive
 
     bind \cr history_search
 end
+
+set -gx GOPATH $HOME/go
+set -gx PATH $GOPATH/bin $PATH
