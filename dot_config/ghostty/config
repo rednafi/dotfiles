@@ -1,13 +1,13 @@
 theme = "Catppuccin Mocha"
 font-family = "Jetbrains Mono"
-font-size = 20
+font-size = 19
 font-thicken = true
 
 # Background configuration
 background-opacity = 0.95
 background-blur-radius = 20
 
-shell-integration = fish
+shell-integration = zsh
 cursor-style = bar
 cursor-style-blink = true
 shell-integration-features = no-cursor
