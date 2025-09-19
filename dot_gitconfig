@@ -52,3 +52,5 @@
     path = /Users/rednafi/canvas/personal/.gitconfig
 [safe]
 	directory = /Users/rednafi/canvas/taulu
+[url "git@github.com:"]
+       insteadOf = https://github.com/
