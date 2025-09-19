@@ -26,8 +26,8 @@ if status is-interactive
     # Prune all unused data including volumes
     abbr ,docker-prune-volumes 'docker system prune -af --volumes'
 
-    # Run all Docker prune steps
-    abbr ,docker-nuke ",docker-prune-containers && ,docker-prune-images && ,docker-prune-volumes"
+    # Run all Docker prune steps (fully inlined)
+    abbr ,docker-nuke 'docker stop $(docker ps -aq) 2> /dev/null && docker rm $(docker ps -aq) 2> /dev/null && docker rmi --force $(docker images -q) || true && docker system prune -af --volumes'
 
     # --- Wolt / Doordash Dev Tools ---
     # Kubernetes shortcut via tsh
