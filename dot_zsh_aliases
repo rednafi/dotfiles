@@ -1,3 +1,4 @@
+# -*- mode: shell-script -*-
 ##########################################
 # Aliases
 ##########################################
@@ -12,6 +13,7 @@ alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
 alias ls="ls -G"
+alias cat="bat"
 alias python="python3.14"
 
 

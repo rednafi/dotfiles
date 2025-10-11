@@ -1,3 +1,4 @@
+<!-- -*- mode: markdown -*- -->
 # dotfiles
 
 I used to rely on [GNU Stow] to [wrangle my dotfiles], but once I added a few more laptops and dev VMs, the maze of
