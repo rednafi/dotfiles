@@ -1,124 +1,189 @@
-# -*- mode: shell -*-
-
-# ==============================
-# ZSH CONFIGURATION
-# ==============================
-
-# Uncomment to profile startup time
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║ 1. PERFORMANCE PROFILING (Optional)                                       ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
+# Uncomment to profile startup time, then run `zprof` at shell prompt
 # zmodload zsh/zprof
 
-# ==============================
-# PROMPT & KEY BINDINGS
-# ==============================
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║ 2. CRITICAL PATH - Fast startup essentials                                ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
 
-# Set the prompt
-precmd() { print }
+# ──────────────────────────────────────────────────────────────────────────────
+# 2.1 Environment Variables
+# ──────────────────────────────────────────────────────────────────────────────
+export PATH="/opt/homebrew/bin:\
+$HOME/.local/share/uv/python:\
+/opt/homebrew/opt/sqlite/bin:\
+/opt/homebrew/opt/coreutils/libexec/gnubin:\
+$HOME/go/bin:\
+$PATH"
+
+export GOPATH="$HOME/go"
+export EDITOR="micro"
+export VISUAL="cursor --wait"
+export CLICOLOR=1
+
+# Enhanced directory navigation (adds ~/canvas to cd search path)
+CDPATH="$CDPATH:$HOME/canvas"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 2.2 History Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+HISTSIZE=10000                    # Lines kept in memory during session
+SAVEHIST=1000000                  # Lines saved to history file
+HISTFILE="$HOME/.zsh_history"
+
+# History options (no external calls, pure shell operations)
+setopt EXTENDED_HISTORY           # Record timestamp in history
+setopt SHARE_HISTORY             # Share history across sessions
+setopt INC_APPEND_HISTORY        # Write to history immediately
+setopt HIST_IGNORE_ALL_DUPS      # Remove older duplicates
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks
+setopt HIST_IGNORE_SPACE         # Ignore commands starting with space
+setopt HIST_VERIFY               # Show command before execution from history
+setopt HIST_BEEP                 # Beep when accessing nonexistent history
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicates first when trimming
+setopt HIST_FIND_NO_DUPS         # Don't display duplicates in search
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicates to history file
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 2.3 Prompt & Key Bindings
+# ──────────────────────────────────────────────────────────────────────────────
+# Simple two-line prompt: username@hostname:path on first line, $ on second
+precmd() { print }  # Add blank line before prompt
+
 PS1="%{%F{yellow}%}%n@%{%f%}%{%F{yellow}%}%m:%{%F{cyan}%}% %(5~|%-1~/.../%3~|%4~)
 %{%f%}$ "
 
-# Key bindings and color settings
-bindkey -e
-export CLICOLOR=1
+bindkey -e  # Emacs key bindings
 
-# ==============================
-# HISTORY SETTINGS
-# ==============================
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║ 3. DEFERRED LOADING - Everything after prompt is ready                    ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
 
-# History options
-setopt EXTENDED_HISTORY       # Save timestamp of command
-setopt SHARE_HISTORY         # Share history between sessions
-setopt INC_APPEND_HISTORY    # Append to history immediately
-setopt HIST_IGNORE_ALL_DUPS  # Don't record duplicates
-setopt HIST_REDUCE_BLANKS    # Remove unnecessary blanks
-setopt HIST_IGNORE_DUPS      # Don't record duplicates
-setopt HIST_IGNORE_SPACE     # Don't record commands starting with space
-setopt HIST_VERIFY           # Show command with history expansion to user before running it
-setopt HIST_BEEP             # Beep when accessing non-existent history
-setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history
-setopt HIST_FIND_NO_DUPS     # Do not display a line previously found
-setopt HIST_SAVE_NO_DUPS     # Don't write duplicate entries in the history file
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.1 Completion System
+# ──────────────────────────────────────────────────────────────────────────────
+# Setup cache directory
+ZSH_CACHE_DIR="$HOME/.zsh_cache"
+mkdir -p "$ZSH_CACHE_DIR"
 
-# History size settings
-HISTSIZE=10000              # Number of commands to keep in memory
-SAVEHIST=1000000           # Number of commands to save to disk
-HISTFILE=~/.zsh_history    # Where to save history to disk
+# Initialize completion with smart caching (regenerate once per 24 hours)
+autoload -Uz compinit
+setopt EXTENDEDGLOB
 
+local zcompdump="$ZSH_CACHE_DIR/.zcompdump"
+if [[ -n $zcompdump(#qNmh+24) ]]; then
+    compinit -i -d "$zcompdump"  # Full regeneration
+else
+    compinit -C -i -d "$zcompdump"  # Skip security check, use cache
+fi
 
-# ==============================
-# PLUGINS
-# ==============================
+unsetopt EXTENDEDGLOB
 
-# Directory for plugins
-zsh_plugins_dir="$HOME/.zsh_plugins"
-github_plugins=(
-    zsh-users/zsh-autosuggestions
-    zsh-users/zsh-history-substring-search
-    zsh-users/zsh-completions
-    zsh-users/zsh-syntax-highlighting  # Must be last
-)
-
-# Clone and load plugins
-for plugin in $github_plugins; do
-    plugin_dir="$zsh_plugins_dir/$plugin"
-    if [[ ! -d $plugin_dir ]]; then
-        mkdir -p "$plugin_dir"
-        git clone --depth 1 "https://github.com/$plugin.git" "$plugin_dir" &> /dev/null
-    fi
-    source "$plugin_dir/${plugin#*/}.plugin.zsh" &> /dev/null || true
-done
-
-# ==============================
-# COMPLETION SETTINGS
-# ==============================
-
-# Case-insensitive and substring matching for completion
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.2 Completion Styling
+# ──────────────────────────────────────────────────────────────────────────────
+# Case-insensitive completion with smart matching
 zstyle ':completion:*' matcher-list \
     'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
-# Show completion menu on second tab press
-zstyle ':completion:*' menu select
+# Visual settings
+zstyle ':completion:*' menu select              # Interactive menu selection
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Colorized listings
+zstyle ':completion:*' group-name ''            # Group completions by type
+zstyle ':completion:*' verbose yes              # Verbose descriptions
 
-# Additional completion settings
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Colored completion
-zstyle ':completion:*' group-name ''                   # Group completion results
-zstyle ':completion:*' verbose yes                     # Show completion descriptions
-zstyle ':completion:*' use-compctl false              # Use new completion system
-zstyle ':completion:*' rehash true                    # Automatically rehash commands
-zstyle ':completion:*' accept-exact '*(N)'            # Accept exact matches
-zstyle ':completion:*' cache-path $ZSH_CACHE_DIR      # Cache completion results
+# Performance settings
+zstyle ':completion:*' use-compctl false        # Don't use old compctl
+zstyle ':completion:*' rehash true              # Auto-find new executables
+zstyle ':completion:*' accept-exact '*(N)'      # Speed up path completion
+zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR"  # Cache location
 
-# Completion for specific commands
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.3 Command-Specific Completion
+# ──────────────────────────────────────────────────────────────────────────────
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
-# Load direnv
-eval "$(direnv hook zsh)"
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.4 Plugin Management
+# ──────────────────────────────────────────────────────────────────────────────
+zsh_plugins_dir="$HOME/.zsh_plugins"
 
-# ==============================
-# ENVIRONMENT & PATH
-# ==============================
+# Plugin list (ORDER MATTERS: syntax-highlighting must be last!)
+github_plugins=(
+    zsh-users/zsh-autosuggestions          # Suggests commands as you type
+    zsh-users/zsh-history-substring-search # Better history search
+    zsh-users/zsh-completions              # Additional completions
+    zsh-users/zsh-syntax-highlighting      # ⚠️  MUST BE LAST
+)
 
-# Load aliases and environment variables
-source ~/.zsh_aliases
-source ~/.zshenv
+# Clone and source plugins (error suppression for speed)
+for plugin in $github_plugins; do
+    plugin_dir="$zsh_plugins_dir/$plugin"
+
+    # Clone if not present (shallow clone for speed)
+    if [[ ! -d $plugin_dir ]]; then
+        mkdir -p "$plugin_dir"
+        git clone --depth 1 "https://github.com/$plugin.git" "$plugin_dir" &> /dev/null
+    fi
+
+    # Source plugin file (direct source, no subshell redirect)
+    plugin_file="$plugin_dir/${plugin#*/}.plugin.zsh"
+    [[ -f $plugin_file ]] && source "$plugin_file" 2>/dev/null
+done
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.5 Plugin Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+# Clear autosuggestions on these widget actions
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
+    bracketed-paste
+    up-line-or-search
+    down-line-or-search
+    expand-or-complete
+    accept-line
+    push-line-or-edit
+)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.6 External Configurations
+# ──────────────────────────────────────────────────────────────────────────────
+# User aliases (.zshenv is auto-loaded by zsh, no need to source)
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+
+# Fuzzy finder integration
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste up-line-or-search down-line-or-search expand-or-complete accept-line push-line-or-edit)
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.7 Direnv Integration (Lazy Loading)
+# ──────────────────────────────────────────────────────────────────────────────
+# Defers direnv evaluation until directory changes or before prompt display
+# This avoids slowing down shell startup
 
-# PATH configuration
-export PATH="/opt/homebrew/bin:$HOME/.local/share/uv/python:/opt/homebrew/opt/sqlite/bin:\
-/opt/homebrew/opt/coreutils/libexec/gnubin:$HOME/go/bin:$PATH"
+_direnv_hook() {
+    trap -- '' SIGINT  # Ignore SIGINT during direnv eval
+    eval "$(direnv export zsh 2>/dev/null)"
+    trap - SIGINT      # Restore SIGINT handling
+}
 
-# Editor configuration
-export EDITOR="micro"
-export VISUAL="code --wait"
+# Register hook for prompt display
+typeset -ag precmd_functions
+if [[ -z "${precmd_functions[(r)_direnv_hook]+1}" ]]; then
+    precmd_functions=(_direnv_hook $precmd_functions)
+fi
 
-# CD path for quick navigation
-CDPATH="$CDPATH:$HOME/canvas"
+# Register hook for directory changes
+typeset -ag chpwd_functions
+if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
+    chpwd_functions=(_direnv_hook $chpwd_functions)
+fi
 
-# Uncomment to see profiling results
-#zprof
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║ END OF CONFIGURATION                                                      ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
 
-ZSH_CACHE_DIR="$HOME/.zsh_cache"
-mkdir -p "$ZSH_CACHE_DIR"
+# Uncomment to display profiling results (requires zmodload zsh/zprof at top)
+# zprof
