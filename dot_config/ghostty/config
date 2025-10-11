@@ -1,3 +1,4 @@
+# -*- mode: conf -*-
 theme = "Catppuccin Mocha"
 font-family = "Jetbrains Mono"
 font-size = 19

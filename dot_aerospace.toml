@@ -1,12 +1,21 @@
+# -*- mode: toml -*-
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = [
+    # Launch apps - they will be automatically assigned to workspaces via on-window-detected rules
+    'exec-and-forget open -a /Applications/Google\ Chrome.app',
+    'exec-and-forget open -a /Applications/Ghostty.app',
+    'exec-and-forget open -a /Applications/Obsidian.app',
+    'exec-and-forget open -a /Applications/Cursor.app',
+    'exec-and-forget open -a /Applications/Slack.app',
+]
 
 # Start AeroSpace at login
 start-at-login = true
+
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -163,3 +172,24 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# Automatically assign apps to specific workspaces when they open
+[[on-window-detected]]
+if.app-name-regex-substring = 'Chrome'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Ghostty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Obsidian'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Cursor'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Slack'
+run = 'move-node-to-workspace 5'

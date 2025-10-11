@@ -1,5 +1,6 @@
+# -*- mode: yaml -*-
 github.com:
-    user: rednafi
-    git_protocol: ssh
-    users:
-        rednafi:
+  user: rednafi
+  git_protocol: ssh
+  users:
+    rednafi:
