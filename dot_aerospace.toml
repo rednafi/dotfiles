@@ -8,8 +8,8 @@ after-startup-command = [
     # Launch apps - they will be automatically assigned to workspaces via on-window-detected rules
     'exec-and-forget open -a /Applications/Google\ Chrome.app',
     'exec-and-forget open -a /Applications/Ghostty.app',
-    'exec-and-forget open -a /Applications/Obsidian.app',
     'exec-and-forget open -a /Applications/Cursor.app',
+    'exec-and-forget open -a /Applications/Obsidian.app',
     'exec-and-forget open -a /Applications/Slack.app',
 ]
 
@@ -124,22 +124,22 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-f = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
+    alt-1 = 'workspace 1-Browser'
+    alt-2 = 'workspace 2-Terminal'
+    alt-3 = 'workspace 3-Code'
+    alt-4 = 'workspace 4-Notes'
+    alt-5 = 'workspace 5-Slack'
+    alt-6 = 'workspace 6-Etc'
+    alt-7 = 'workspace 7-Etc'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
+    alt-shift-1 = 'move-node-to-workspace 1-Browser'
+    alt-shift-2 = 'move-node-to-workspace 2-Terminal'
+    alt-shift-3 = 'move-node-to-workspace 3-Code'
+    alt-shift-4 = 'move-node-to-workspace 4-Notes'
+    alt-shift-5 = 'move-node-to-workspace 5-Slack'
+    alt-shift-6 = 'move-node-to-workspace 6-Etc'
+    alt-shift-7 = 'move-node-to-workspace 7-Etc'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -176,20 +176,20 @@ automatically-unhide-macos-hidden-apps = false
 # Automatically assign apps to specific workspaces when they open
 [[on-window-detected]]
 if.app-name-regex-substring = 'Chrome'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace 1-Browser'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Ghostty'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'Obsidian'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 2-Terminal'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Cursor'
-run = 'move-node-to-workspace 4'
+run = 'move-node-to-workspace 3-Code'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Obsidian'
+run = 'move-node-to-workspace 4-Notes'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Slack'
-run = 'move-node-to-workspace 5'
+run = 'move-node-to-workspace 5-Slack'
