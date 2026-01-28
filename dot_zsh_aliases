@@ -30,7 +30,26 @@ alias ,docker-nuke="\
 alias tk="tsh kubectl"
 
 # Misc
-alias ,clear-cache='sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches \
-    && sudo rm -rf /var/tmp'
+alias ,clear-junk='
+    echo "Clearing user caches..." &&
+    sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches/* 2>/dev/null;
+    echo "Clearing system temp files..." &&
+    sudo rm -rf /var/tmp/* 2>/dev/null;
+    echo "Emptying Trash..." &&
+    sudo rm -rf ~/.Trash/* 2>/dev/null;
+    echo "Clearing Xcode derived data..." &&
+    rm -rf ~/Library/Developer/Xcode/DerivedData/* 2>/dev/null;
+    echo "Clearing Go module cache..." &&
+    go clean -modcache 2>/dev/null;
+    echo "Clearing npm cache..." &&
+    npm cache clean --force 2>/dev/null;
+    echo "Clearing Homebrew cache..." &&
+    brew cleanup --prune=all 2>/dev/null;
+    echo "Clearing pip cache..." &&
+    pip cache purge 2>/dev/null;
+    echo "Flushing DNS cache..." &&
+    sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 2>/dev/null;
+    echo "Done! 🧹"
+'
 
 alias ,www="python -m http.server 6969"

@@ -17,11 +17,12 @@ $HOME/.local/share/uv/python:\
 /opt/homebrew/opt/sqlite/bin:\
 /opt/homebrew/opt/coreutils/libexec/gnubin:\
 $HOME/go/bin:\
+/Users/rednafi/.local/bin:\
 $PATH"
 
 export GOPATH="$HOME/go"
 export EDITOR="micro"
-export VISUAL="cursor --wait"
+export VISUAL="code --wait"
 export CLICOLOR=1
 
 # Enhanced directory navigation (adds ~/canvas to cd search path)
