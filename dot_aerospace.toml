@@ -8,7 +8,7 @@ after-startup-command = [
     # Launch apps - they will be automatically assigned to workspaces via on-window-detected rules
     'exec-and-forget open -a /Applications/Google\ Chrome.app',
     'exec-and-forget open -a /Applications/Ghostty.app',
-    'exec-and-forget open -a /Applications/Cursor.app',
+    'exec-and-forget open -a /Applications/Visual\ Studio\ Code.app',
     'exec-and-forget open -a /Applications/Obsidian.app',
     'exec-and-forget open -a /Applications/Slack.app',
 ]
@@ -151,7 +151,7 @@ automatically-unhide-macos-hidden-apps = false
 
     # App-specific keybindings for quick access (using full .app paths)
     alt-b = 'exec-and-forget open -a /Applications/Google\ Chrome.app'
-    alt-c = 'exec-and-forget open -a /Applications/Cursor.app'
+    alt-c = 'exec-and-forget open -a /Applications/Visual\ Studio\ Code.app'
     alt-f = 'exec-and-forget open -a /System/Library/CoreServices/Finder.app'
     alt-t = 'exec-and-forget open -a /Applications/Ghostty.app'
     alt-s = 'exec-and-forget open -a /Applications/Slack.app'
@@ -183,7 +183,7 @@ if.app-name-regex-substring = 'Ghostty'
 run = 'move-node-to-workspace 2-Terminal'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'Cursor'
+if.app-name-regex-substring = 'Code'
 run = 'move-node-to-workspace 3-Code'
 
 [[on-window-detected]]
