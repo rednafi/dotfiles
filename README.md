@@ -36,7 +36,7 @@ chezmoi apply -v                               # copy everything into place verb
 | **Apply** the queued changes for real | `chezmoi apply -v`                                                   |
 | **Stop tracking** a file              | `chezmoi forget ~/.gitconfig`                                        |
 | **Jump into** the source Git repo     | `chezmoi cd`                                                         |
-| **Commit + push** your latest tweaks  | <pre>git add -A<br>git commit -m "Added gitconfig"<br>git push</pre> |
+| **Commit + push** your latest tweaks  | <pre>git add -A<br>git commit -m "feat: added gitconfig"<br>git push</pre> |
 
 ### 3. What actually happens when `chezmoi apply` runs
 
