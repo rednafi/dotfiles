@@ -34,13 +34,55 @@ alias jetbox="~/.local/bin/jetbox"
 alias ,clear-junk='
     echo "Clearing user caches..." &&
     sudo rm -rf /System/Volumes/Data/Users/$USER/Library/Caches/* 2>/dev/null;
+    echo "Clearing system caches..." &&
+    sudo rm -rf /Library/Caches/* 2>/dev/null;
     echo "Clearing system temp files..." &&
     sudo rm -rf /var/tmp/* 2>/dev/null;
+    sudo rm -rf /private/var/folders/*/* 2>/dev/null;
+    echo "Clearing system logs..." &&
+    sudo rm -rf /private/var/log/asl/*.asl 2>/dev/null;
+    sudo rm -rf /Library/Logs/* 2>/dev/null;
+    rm -rf ~/Library/Logs/* 2>/dev/null;
+    echo "Clearing crash reports..." &&
+    rm -rf ~/Library/Logs/DiagnosticReports/* 2>/dev/null;
+    sudo rm -rf /Library/Logs/DiagnosticReports/* 2>/dev/null;
+    echo "Clearing QuickLook cache..." &&
+    qlmanage -r cache 2>/dev/null;
     echo "Emptying Trash..." &&
     sudo rm -rf ~/.Trash/* 2>/dev/null;
+    echo "Clearing old iOS backups..." &&
+    rm -rf ~/Library/Application\ Support/MobileSync/Backup/* 2>/dev/null;
+    echo "Clearing Chrome cache and junk..." &&
+    rm -rf ~/Library/Caches/Google/Chrome/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/Default/Service\ Worker/CacheStorage/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/Default/GPUCache/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/Crash\ Reports/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/ShaderCache/* 2>/dev/null;
+    echo "Clearing Slack cache..." &&
+    rm -rf ~/Library/Caches/com.tinyspeck.slackmacgap/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Slack/Cache/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Slack/Service\ Worker/CacheStorage/* 2>/dev/null;
+    echo "Clearing Discord cache..." &&
+    rm -rf ~/Library/Application\ Support/discord/Cache/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/discord/Code\ Cache/* 2>/dev/null;
+    echo "Clearing Zoom cache and logs..." &&
+    rm -rf ~/Library/Caches/us.zoom.xos/* 2>/dev/null;
+    rm -rf ~/Library/Logs/zoom.us/* 2>/dev/null;
+    echo "Clearing Spotify cache..." &&
+    rm -rf ~/Library/Caches/com.spotify.client/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Spotify/PersistentCache/* 2>/dev/null;
+    echo "Clearing VS Code / Cursor cache..." &&
+    rm -rf ~/Library/Application\ Support/Code/Cache/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Code/CachedData/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Code/CachedExtensions/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Cursor/Cache/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Cursor/CachedData/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Cursor/CachedExtensions/* 2>/dev/null;
     echo "Clearing Xcode derived data..." &&
     rm -rf ~/Library/Developer/Xcode/DerivedData/* 2>/dev/null;
-    echo "Clearing Go module cache..." &&
+    rm -rf ~/Library/Developer/Xcode/Archives/* 2>/dev/null;
+    echo "Clearing Go caches..." &&
+    go clean -cache 2>/dev/null;
     go clean -modcache 2>/dev/null;
     echo "Clearing npm cache..." &&
     npm cache clean --force 2>/dev/null;
@@ -48,6 +90,10 @@ alias ,clear-junk='
     brew cleanup --prune=all 2>/dev/null;
     echo "Clearing pip cache..." &&
     pip cache purge 2>/dev/null;
+    echo "Clearing Bazel cache..." &&
+    rm -rf ~/dd-bazel-cache/* 2>/dev/null;
+    echo "Clearing Docker junk..." &&
+    docker system prune -af 2>/dev/null;
     echo "Flushing DNS cache..." &&
     sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 2>/dev/null;
     echo "Done! 🧹"

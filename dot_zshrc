@@ -189,3 +189,6 @@ fi
 
 # Uncomment to display profiling results (requires zmodload zsh/zprof at top)
 # zprof
+
+# Added by devbox to ensure ~/.local/bin is on PATH
+export PATH="/Users/rednafi/.local/bin:$PATH"
