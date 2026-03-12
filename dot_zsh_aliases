@@ -28,6 +28,7 @@ alias ,docker-nuke="\
 
 # Doordash / wolt
 alias tk="tsh kubectl"
+alias jetbox="~/.local/bin/jetbox"
 
 # Misc
 alias ,clear-junk='
