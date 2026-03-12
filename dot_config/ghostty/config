@@ -12,3 +12,6 @@ shell-integration = zsh
 cursor-style = bar
 cursor-style-blink = true
 shell-integration-features = no-cursor
+
+# Notification
+audible-bell = true
