@@ -1,5 +1,5 @@
 # -*- mode: conf -*-
-theme = "Catppuccin Mocha"
+theme = catppuccin-mocha
 font-family = "Jetbrains Mono"
 font-size = 19
 font-thicken = true
