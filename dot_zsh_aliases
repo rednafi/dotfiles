@@ -54,6 +54,11 @@ alias ,clear-junk='
     rm -rf ~/Library/Application\ Support/MobileSync/Backup/* 2>/dev/null;
     echo "Clearing Chrome cache and junk..." &&
     rm -rf ~/Library/Caches/Google/Chrome/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/OptGuideOnDeviceModel 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/optimization_guide_model_store 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/extensions_crx_cache 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/Chrome/component_crx_cache 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Google/GoogleUpdater/crx_cache 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Google/Chrome/Default/Service\ Worker/CacheStorage/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Google/Chrome/Default/GPUCache/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Google/Chrome/Crash\ Reports/* 2>/dev/null;
@@ -74,13 +79,21 @@ alias ,clear-junk='
     echo "Clearing VS Code / Cursor cache..." &&
     rm -rf ~/Library/Application\ Support/Code/Cache/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/CachedData/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Code/CachedExtensionVSIXs 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/CachedExtensions/* 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Code/Service\ Worker 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/Code/GPUCache 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Cursor/Cache/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Cursor/CachedData/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Cursor/CachedExtensions/* 2>/dev/null;
     echo "Clearing Xcode derived data..." &&
     rm -rf ~/Library/Developer/Xcode/DerivedData/* 2>/dev/null;
     rm -rf ~/Library/Developer/Xcode/Archives/* 2>/dev/null;
+    echo "Clearing Python caches..." &&
+    uv cache clean 2>/dev/null;
+    rm -rf ~/.cache/pre-commit 2>/dev/null;
+    rm -rf ~/Library/Application\ Support/virtualenv 2>/dev/null;
+    pip cache purge 2>/dev/null;
     echo "Clearing Go caches..." &&
     go clean -cache 2>/dev/null;
     go clean -modcache 2>/dev/null;
@@ -88,12 +101,12 @@ alias ,clear-junk='
     npm cache clean --force 2>/dev/null;
     echo "Clearing Homebrew cache..." &&
     brew cleanup --prune=all 2>/dev/null;
-    echo "Clearing pip cache..." &&
-    pip cache purge 2>/dev/null;
     echo "Clearing Bazel cache..." &&
     rm -rf ~/dd-bazel-cache/* 2>/dev/null;
     echo "Clearing Docker junk..." &&
     docker system prune -af 2>/dev/null;
+    echo "Clearing Time Machine local snapshots..." &&
+    sudo tmutil deletelocalsnapshots / 2>/dev/null;
     echo "Flushing DNS cache..." &&
     sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 2>/dev/null;
     echo "Done! 🧹"
