@@ -16,6 +16,7 @@ brew "ripgrep"
 brew "shellcheck"
 brew "sqlite"
 brew "go"
+brew "node"
 brew "python@3.14"
 brew "uv"
 
