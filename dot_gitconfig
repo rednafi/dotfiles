@@ -1,0 +1,5 @@
+[includeIf "gitdir:~/canvas/pers/"]
+	path = ~/.gitconfig-pers
+
+[includeIf "gitdir:~/canvas/werk/"]
+	path = ~/.gitconfig-werk
