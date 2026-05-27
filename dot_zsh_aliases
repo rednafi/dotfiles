@@ -3,32 +3,80 @@
 # Aliases
 ##########################################
 
-# Git: Clear branches except current, 'main', 'master', 'staging'.
-alias ,brclr="\
-    git branch | grep -vwE 'main|master|staging|development' | xargs git branch -D"
+unalias ,brclr ,docker-prune-containers ,docker-prune-images \
+    ,docker-prune-volumes ,docker-nuke cat python tk jetbox 2>/dev/null
+
+# Git: Clear branches except current, 'main', 'master', 'staging', 'development'.
+,brclr() {
+    local current branch
+
+    current="$(git branch --show-current 2>/dev/null)" || return
+    git branch --format='%(refname:short)' 2>/dev/null |
+        while IFS= read -r branch; do
+            case "$branch" in
+                "$current"|main|master|staging|development) continue ;;
+            esac
+            git branch -D "$branch"
+        done
+}
 
 ## Unix
 alias sudo="sudo "
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
-alias ls="ls -G"
-alias cat="bat"
-alias python="python3.14"
+
+if ls --color=auto -d . >/dev/null 2>&1; then
+    alias ls="ls --color=auto"
+else
+    alias ls="ls -G"
+fi
+
+command -v bat >/dev/null 2>&1 && alias cat="bat"
+command -v python3.14 >/dev/null 2>&1 && alias python="python3.14"
 
 
 # Docker
-alias ,docker-prune-containers='\
-    docker stop $(docker ps -aq) 2> /dev/null && docker rm $(docker ps -aq) 2> /dev/null'
-alias ,docker-prune-images='docker rmi --force $(docker images -q) || true'
-alias ,docker-prune-volumes='docker system prune -af --volumes'
-alias ,docker-nuke="\
-    ,docker-prune-containers && ,docker-prune-images && ,docker-prune-volumes"
+_docker_available() {
+    command -v docker >/dev/null 2>&1
+}
+
+,docker-prune-containers() {
+    _docker_available || return 0
+
+    local containers
+    containers=("${(@f)$(docker ps -aq 2>/dev/null)}")
+    (( ${#containers[@]} )) || return 0
+
+    docker stop "${containers[@]}" 2>/dev/null || true
+    docker rm "${containers[@]}" 2>/dev/null || true
+}
+
+,docker-prune-images() {
+    _docker_available || return 0
+
+    local images
+    images=("${(@f)$(docker images -q 2>/dev/null)}")
+    (( ${#images[@]} )) || return 0
+
+    docker rmi --force "${images[@]}" || true
+}
+
+,docker-prune-volumes() {
+    _docker_available || return 0
+    docker system prune -af --volumes
+}
+
+,docker-nuke() {
+    ,docker-prune-containers
+    ,docker-prune-images
+    ,docker-prune-volumes
+}
 
 
 # Doordash / wolt
-alias tk="tsh kubectl"
-alias jetbox="~/.local/bin/jetbox"
+command -v tsh >/dev/null 2>&1 && alias tk="tsh kubectl"
+[[ -x "$HOME/.local/bin/jetbox" ]] && alias jetbox="$HOME/.local/bin/jetbox"
 
 # Misc
 alias ,clear-junk='
@@ -67,42 +115,26 @@ alias ,clear-junk='
     rm -rf ~/Library/Caches/com.tinyspeck.slackmacgap/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Slack/Cache/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Slack/Service\ Worker/CacheStorage/* 2>/dev/null;
-    echo "Clearing Discord cache..." &&
-    rm -rf ~/Library/Application\ Support/discord/Cache/* 2>/dev/null;
-    rm -rf ~/Library/Application\ Support/discord/Code\ Cache/* 2>/dev/null;
     echo "Clearing Zoom cache and logs..." &&
     rm -rf ~/Library/Caches/us.zoom.xos/* 2>/dev/null;
     rm -rf ~/Library/Logs/zoom.us/* 2>/dev/null;
-    echo "Clearing Spotify cache..." &&
-    rm -rf ~/Library/Caches/com.spotify.client/* 2>/dev/null;
-    rm -rf ~/Library/Application\ Support/Spotify/PersistentCache/* 2>/dev/null;
-    echo "Clearing VS Code / Cursor cache..." &&
+    echo "Clearing VS Code cache..." &&
     rm -rf ~/Library/Application\ Support/Code/Cache/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/CachedData/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/CachedExtensionVSIXs 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/CachedExtensions/* 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/Service\ Worker 2>/dev/null;
     rm -rf ~/Library/Application\ Support/Code/GPUCache 2>/dev/null;
-    rm -rf ~/Library/Application\ Support/Cursor/Cache/* 2>/dev/null;
-    rm -rf ~/Library/Application\ Support/Cursor/CachedData/* 2>/dev/null;
-    rm -rf ~/Library/Application\ Support/Cursor/CachedExtensions/* 2>/dev/null;
-    echo "Clearing Xcode derived data..." &&
-    rm -rf ~/Library/Developer/Xcode/DerivedData/* 2>/dev/null;
-    rm -rf ~/Library/Developer/Xcode/Archives/* 2>/dev/null;
     echo "Clearing Python caches..." &&
     uv cache clean 2>/dev/null;
     rm -rf ~/.cache/pre-commit 2>/dev/null;
     rm -rf ~/Library/Application\ Support/virtualenv 2>/dev/null;
-    pip cache purge 2>/dev/null;
+    command -v pip3 >/dev/null 2>&1 && pip3 cache purge 2>/dev/null;
     echo "Clearing Go caches..." &&
     go clean -cache 2>/dev/null;
     go clean -modcache 2>/dev/null;
-    echo "Clearing npm cache..." &&
-    npm cache clean --force 2>/dev/null;
     echo "Clearing Homebrew cache..." &&
     brew cleanup --prune=all 2>/dev/null;
-    echo "Clearing Bazel cache..." &&
-    rm -rf ~/dd-bazel-cache/* 2>/dev/null;
     echo "Clearing Docker junk..." &&
     docker system prune -af 2>/dev/null;
     echo "Clearing Time Machine local snapshots..." &&

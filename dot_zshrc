@@ -12,13 +12,33 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # 2.1 Environment Variables
 # ──────────────────────────────────────────────────────────────────────────────
-export PATH="/opt/homebrew/bin:\
-$HOME/.local/share/uv/python:\
-/opt/homebrew/opt/sqlite/bin:\
-/opt/homebrew/opt/coreutils/libexec/gnubin:\
-$HOME/go/bin:\
-/Users/rednafi/.local/bin:\
-$PATH"
+typeset -U path cdpath fpath
+
+_dotfiles_path_dirs=(
+    /opt/homebrew/bin
+    /opt/homebrew/opt/sqlite/bin
+    /opt/homebrew/opt/coreutils/libexec/gnubin
+    /Applications/OrbStack.app/Contents/MacOS/xbin
+    "$HOME/.local/bin"
+    "$HOME/.local/share/uv/python"
+    "$HOME/go/bin"
+)
+
+_dotfiles_existing_path_dirs=()
+for _dir in "${_dotfiles_path_dirs[@]}"; do
+    [[ -d "$_dir" ]] && _dotfiles_existing_path_dirs+=("$_dir")
+done
+
+path=("${_dotfiles_existing_path_dirs[@]}" "${path[@]}")
+
+_dotfiles_clean_path=()
+for _dir in "${path[@]}"; do
+    [[ -d "$_dir" ]] && _dotfiles_clean_path+=("$_dir")
+done
+
+path=("${_dotfiles_clean_path[@]}")
+unset _dir _dotfiles_path_dirs _dotfiles_existing_path_dirs _dotfiles_clean_path
+export PATH
 
 export GOPATH="$HOME/go"
 export EDITOR="micro"
@@ -26,13 +46,13 @@ export VISUAL="code --wait"
 export CLICOLOR=1
 
 # Enhanced directory navigation (adds ~/canvas to cd search path)
-CDPATH="$CDPATH:$HOME/canvas"
+[[ -d "$HOME/canvas" ]] && cdpath=("$HOME/canvas" "${cdpath[@]}")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 2.2 History Configuration
 # ──────────────────────────────────────────────────────────────────────────────
-HISTSIZE=10000                    # Lines kept in memory during session
-SAVEHIST=1000000                  # Lines saved to history file
+HISTSIZE=5000                     # Lines kept in memory during session
+SAVEHIST=50000                    # Lines saved to history file
 HISTFILE="$HOME/.zsh_history"
 
 # History options (no external calls, pure shell operations)
@@ -66,6 +86,20 @@ bindkey -e  # Emacs key bindings
 # ──────────────────────────────────────────────────────────────────────────────
 # 3.1 Completion System
 # ──────────────────────────────────────────────────────────────────────────────
+zsh_plugins_dir="$HOME/.zsh_plugins"
+
+# Plugin list (ORDER MATTERS: syntax-highlighting must be last!)
+github_plugins=(
+    zsh-users/zsh-autosuggestions          # Suggests commands as you type
+    zsh-users/zsh-history-substring-search # Better history search
+    zsh-users/zsh-completions              # Additional completions
+    zsh-users/zsh-syntax-highlighting      # MUST BE LAST
+)
+
+if [[ -d "$zsh_plugins_dir/zsh-users/zsh-completions/src" ]]; then
+    fpath=("$zsh_plugins_dir/zsh-users/zsh-completions/src" "${fpath[@]}")
+fi
+
 # Setup cache directory
 ZSH_CACHE_DIR="$HOME/.zsh_cache"
 mkdir -p "$ZSH_CACHE_DIR"
@@ -86,13 +120,17 @@ unsetopt EXTENDEDGLOB
 # ──────────────────────────────────────────────────────────────────────────────
 # 3.2 Completion Styling
 # ──────────────────────────────────────────────────────────────────────────────
+if [[ -z "${LS_COLORS:-}" ]] && command -v gdircolors >/dev/null 2>&1; then
+    eval "$(gdircolors -b)"
+fi
+
 # Case-insensitive completion with smart matching
 zstyle ':completion:*' matcher-list \
     'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Visual settings
 zstyle ':completion:*' menu select              # Interactive menu selection
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Colorized listings
+[[ -n "${LS_COLORS:-}" ]] && zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' group-name ''            # Group completions by type
 zstyle ':completion:*' verbose yes              # Verbose descriptions
 
@@ -105,31 +143,20 @@ zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR"  # Cache location
 # ──────────────────────────────────────────────────────────────────────────────
 # 3.3 Command-Specific Completion
 # ──────────────────────────────────────────────────────────────────────────────
-zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 3.4 Plugin Management
 # ──────────────────────────────────────────────────────────────────────────────
-zsh_plugins_dir="$HOME/.zsh_plugins"
-
-# Plugin list (ORDER MATTERS: syntax-highlighting must be last!)
-github_plugins=(
-    zsh-users/zsh-autosuggestions          # Suggests commands as you type
-    zsh-users/zsh-history-substring-search # Better history search
-    zsh-users/zsh-completions              # Additional completions
-    zsh-users/zsh-syntax-highlighting      # ⚠️  MUST BE LAST
-)
-
 # Clone and source plugins (error suppression for speed)
 for plugin in $github_plugins; do
     plugin_dir="$zsh_plugins_dir/$plugin"
 
     # Clone if not present (shallow clone for speed)
-    if [[ ! -d $plugin_dir ]]; then
-        mkdir -p "$plugin_dir"
-        git clone --depth 1 "https://github.com/$plugin.git" "$plugin_dir" &> /dev/null
+    if [[ ! -d "$plugin_dir/.git" ]] && command -v git >/dev/null 2>&1; then
+        mkdir -p "${plugin_dir:h}"
+        git clone --depth 1 "https://github.com/$plugin.git" "$plugin_dir" &> /dev/null || continue
     fi
 
     # Source plugin file (direct source, no subshell redirect)
@@ -157,7 +184,16 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
 
 # Fuzzy finder integration
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+fzf_shell_dir="/opt/homebrew/opt/fzf/shell"
+if [[ -r "$fzf_shell_dir/completion.zsh" ]]; then
+    source "$fzf_shell_dir/completion.zsh"
+fi
+if [[ -r "$fzf_shell_dir/key-bindings.zsh" ]]; then
+    source "$fzf_shell_dir/key-bindings.zsh"
+elif [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+fi
+unset fzf_shell_dir
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 3.7 Direnv Integration (Lazy Loading)
@@ -165,22 +201,24 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
 # Defers direnv evaluation until directory changes or before prompt display
 # This avoids slowing down shell startup
 
-_direnv_hook() {
-    trap -- '' SIGINT  # Ignore SIGINT during direnv eval
-    eval "$(direnv export zsh 2>/dev/null)"
-    trap - SIGINT      # Restore SIGINT handling
-}
+if command -v direnv >/dev/null 2>&1; then
+    _direnv_hook() {
+        trap -- '' SIGINT  # Ignore SIGINT during direnv eval
+        eval "$(direnv export zsh 2>/dev/null)"
+        trap - SIGINT      # Restore SIGINT handling
+    }
 
-# Register hook for prompt display
-typeset -ag precmd_functions
-if [[ -z "${precmd_functions[(r)_direnv_hook]+1}" ]]; then
-    precmd_functions=(_direnv_hook $precmd_functions)
-fi
+    # Register hook for prompt display
+    typeset -ag precmd_functions
+    if [[ -z "${precmd_functions[(r)_direnv_hook]+1}" ]]; then
+        precmd_functions=(_direnv_hook $precmd_functions)
+    fi
 
-# Register hook for directory changes
-typeset -ag chpwd_functions
-if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
-    chpwd_functions=(_direnv_hook $chpwd_functions)
+    # Register hook for directory changes
+    typeset -ag chpwd_functions
+    if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
+        chpwd_functions=(_direnv_hook $chpwd_functions)
+    fi
 fi
 
 # ╔═══════════════════════════════════════════════════════════════════════════╗
@@ -189,6 +227,3 @@ fi
 
 # Uncomment to display profiling results (requires zmodload zsh/zprof at top)
 # zprof
-
-# Added by devbox to ensure ~/.local/bin is on PATH
-export PATH="/Users/rednafi/.local/bin:$PATH"
