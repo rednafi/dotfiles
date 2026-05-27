@@ -1,56 +1,43 @@
 <!-- -*- mode: markdown -*- -->
 # dotfiles
 
-I used to rely on [GNU Stow] to [wrangle my dotfiles], but once I added a few more laptops and dev VMs, the maze of
-symlinks became a headache. I'm now giving [chezmoi] a whirl to see if it scales better. So far, so good!
-
-
-## Basic concepts
-
-| Term             | What it really means                                                                                      |
-| ---------------- | --------------------------------------------------------------------------------------------------------- |
-| **source**       | Chez­moi's *single source of truth* (default: `~/.local/share/chezmoi`). It's just a Git repo.             |
-| **destination**  | Your real home directory (or wherever a file ultimately lives). Files flow **source ➜ destination**.      |
-| `add`            | Copy an existing file from destination *into* source and stage it for Git.                                |
-| `forget`         | Remove a file from source but leave the destination copy untouched.                                       |
-| `diff`           | Show a Git-style diff of what chezmoi *would* change right now.                                           |
-| `apply`          | Make reality match source. Renders templates, backs up existing files, moves new files in atomically.     |
-
-
-## Workflow
-
-### 1. Bootstrap a new machine
+## Bootstrap
 
 ```sh
-chezmoi init git@github.com:rednafi/dotfiles   # clone into source
-chezmoi apply -v                               # copy everything into place verbosely
-````
+mkdir -p ~/.local/share
+git clone https://github.com/rednafi/dotfiles.git ~/.local/share/chezmoi
+cd ~/.local/share/chezmoi
+/opt/homebrew/bin/brew bundle --file Brewfile
+/opt/homebrew/bin/chezmoi apply
+```
 
-### 2. Daily routine
+Open a new zsh shell.
 
-| Goal                                  | Command(s)                                                           |
-| ------------------------------------- | -------------------------------------------------------------------- |
-| **Add** a new dotfile                 | `chezmoi add ~/.gitconfig`                                           |
-| **See** what will change (dry-run)    | `chezmoi apply -n -v`                                                |
-| **Review** a standard diff            | `chezmoi diff`                                                       |
-| **Apply** the queued changes for real | `chezmoi apply -v`                                                   |
-| **Stop tracking** a file              | `chezmoi forget ~/.gitconfig`                                        |
-| **Jump into** the source Git repo     | `chezmoi cd`                                                         |
-| **Commit + push** your latest tweaks  | <pre>git add -A<br>git commit -m "feat: add gitconfig"<br>git push</pre> |
+## Maintain
 
-### 3. What actually happens when `chezmoi apply` runs
+Check local package drift:
 
-1. Chez­moi compares **source** to **destination** (same diff you saw with `-n -v`).
-2. For each file that needs work it:
+```sh
+brew bundle check --file Brewfile --verbose
+brew outdated --greedy
+brew bundle cleanup --file Brewfile
+```
 
-   1. Renders templates (if any variables are used).
-   2. Writes a temporary file in the destination directory.
-   3. Backs up the existing destination file with a time-stamp suffix.
-   4. Moves the temp file into place atomically (so half-written configs never happen).
-3. If anything fails, it aborts the remaining operations, leaving your system in a consistent state.
+Apply dotfile changes after reviewing them:
 
-That's it — **init → dry-run → apply → add/forget → push**.
+```sh
+chezmoi add ~/.zshrc
+chezmoi apply --dry-run --verbose
+chezmoi diff
+chezmoi apply --verbose
+```
 
-[gnu stow]: https://www.gnu.org/software/stow/
-[chezmoi]: https://www.chezmoi.io/
-[wrangle my dotfiles]: https://rednafi.com/misc/dotfile_stewardship_for_the_indolent/
+Commit from the source repo:
+
+```sh
+chezmoi cd
+git status --short
+git add -A
+git commit -m "update dotfiles"
+git push
+```

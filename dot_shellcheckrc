@@ -23,4 +23,3 @@ enable=quote-safe-variables
 
 #  Require [[ and warn about [ in Bash/Ksh
 enable=require-double-brackets
-enable=deprecate-which
