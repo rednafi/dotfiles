@@ -4,6 +4,7 @@ tap "nikitabobko/tap"
 
 brew "chezmoi"
 brew "bat"
+brew "bitwarden-cli"
 brew "coreutils"
 brew "direnv"
 brew "fzf"
