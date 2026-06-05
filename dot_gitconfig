@@ -3,9 +3,21 @@
 
 [includeIf "gitdir:~/canvas/werk/"]
 	path = ~/.gitconfig-werk
+[core]
+	editor = zed --wait
+[sequence]
+	editor = zed --wait
 [diff]
 	tool = zed
 [difftool "zed"]
 	cmd = zed --wait --diff \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
+[merge]
+	tool = zed
+[mergetool "zed"]
+	cmd = zed --wait \"$MERGED\"
+	trustExitCode = false
+[mergetool]
+	prompt = false
+	keepBackup = false
