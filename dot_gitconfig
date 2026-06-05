@@ -3,3 +3,9 @@
 
 [includeIf "gitdir:~/canvas/werk/"]
 	path = ~/.gitconfig-werk
+[diff]
+	tool = zed
+[difftool "zed"]
+	cmd = zed --wait --diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
