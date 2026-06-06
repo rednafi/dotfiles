@@ -28,16 +28,15 @@
   "theme": "VSCode Dark Modern",
   "window_decorations": "client",
   "cursor_shape": "bar",
+  "restore_on_startup": "none",
+  "show_call_status_icon": false,
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false,
     "show_tab_bar_buttons": false,
   },
-  "tabs": {
-    "file_icons": true,
-    "git_status": true,
-    "show_close_button": "hover",
-  },
+  "git_status": false,
+  "close_position": "right",
   "toolbar": {
     "breadcrumbs": false,
     "quick_actions": false,
@@ -60,6 +59,12 @@
     "active_language_button": false,
     "cursor_position_button": false,
     "line_endings_button": false,
+  },
+  "gutter": {
+    "line_numbers": true,
+    "code_actions": false,
+    "runnables": false,
+    "folds": false,
   },
   "project_panel": {
     "dock": "left",
@@ -93,6 +98,19 @@
     "dock": "left",
     "button": false,
   },
+  "chat_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "notification_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "assistant": {
+    "enabled": true,
+    "button": false,
+    "dock": "right",
+  },
   "debugger": {
     "dock": "bottom",
     "button": false,
@@ -116,6 +134,9 @@
   },
   "global_lsp_settings": {
     "button": false,
+  },
+  "task": {
+    "show_status_indicator": false,
   },
   "scrollbar": {
     "show": "never",
