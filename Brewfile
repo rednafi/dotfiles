@@ -1,7 +1,5 @@
 # -*- mode: ruby -*-
 
-tap "nikitabobko/tap"
-
 brew "chezmoi"
 brew "bat"
 brew "bitwarden-cli"
@@ -19,7 +17,6 @@ brew "node"
 brew "python@3.14"
 brew "uv"
 
-cask "nikitabobko/tap/aerospace"
 cask "codex"
 cask "ghostty"
 cask "obsidian"
