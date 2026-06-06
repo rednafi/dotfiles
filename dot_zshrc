@@ -48,6 +48,7 @@ export SUDO_EDITOR="zed --wait"
 export GH_EDITOR="zed --wait"
 export KUBE_EDITOR="zed --wait"
 export CLICOLOR=1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Enhanced directory navigation (adds ~/canvas to cd search path)
 [[ -d "$HOME/canvas" ]] && cdpath=("$HOME/canvas" "${cdpath[@]}")
