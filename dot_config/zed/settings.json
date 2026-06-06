@@ -20,7 +20,7 @@
   "base_keymap": "VSCode",
   "buffer_font_family": "JetBrains Mono",
   "icon_theme": "Zed (Default)",
-  "ui_font_size": 16,
+  "ui_font_size": 17,
   "buffer_font_size": 19.0,
   "buffer_line_height": {
     "custom": 1.5
