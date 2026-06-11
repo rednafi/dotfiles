@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Reduce macOS animation latency. Safe to re-run.
 # Source gist: https://gist.github.com/rednafi/d8584cd23a2a999bcb27ce95fc7ce2b6
 

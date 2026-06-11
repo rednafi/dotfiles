@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Basic macOS machine setup. Safe to re-run.
 
 set -euo pipefail
