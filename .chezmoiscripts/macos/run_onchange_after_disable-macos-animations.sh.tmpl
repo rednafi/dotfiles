@@ -6,6 +6,9 @@ set -euo pipefail
 
 [[ "$(uname -s)" == "Darwin" ]] || exit 0
 
+# Animation tweaks are pointless on a headless server.
+[[ {{ .role | quote }} != "server" ]] || exit 0
+
 fast="0.05"
 near_instant="0.01"
 
@@ -28,7 +31,6 @@ defaults write -g NSScrollViewRubberbanding -bool false
 defaults write -g NSUseAnimatedFocusRing -bool false
 defaults write -g NSInitialToolTipDelay -int 0
 defaults write -g NSMenuFlashCount -int 0
-defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g NSWindowShouldDragOnGesture -bool false
 
 # Dock animations.

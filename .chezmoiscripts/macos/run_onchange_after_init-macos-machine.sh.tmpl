@@ -5,7 +5,10 @@ set -euo pipefail
 
 [[ "$(uname -s)" == "Darwin" ]] || exit 0
 
-machine_name="diaspora"
+# Ask for sudo once upfront; the sudo calls below reuse the cached credential.
+sudo -v
+
+machine_name={{ .machineName | quote }}
 screenshot_dir="$HOME/screenshots"
 downloads_dir="$HOME/Downloads"
 canvas_dir="$HOME/canvas"
