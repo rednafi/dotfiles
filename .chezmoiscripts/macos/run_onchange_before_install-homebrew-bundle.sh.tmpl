@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+# Brewfile checksum: {{ include "Brewfile" | sha256sum }}
+
+set -euo pipefail
+
+[[ "$(uname -s)" == "Darwin" ]] || exit 0
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    brew_bin="/opt/homebrew/bin/brew"
+elif [[ -x /usr/local/bin/brew ]]; then
+    brew_bin="/usr/local/bin/brew"
+elif command -v brew >/dev/null 2>&1; then
+    brew_bin="$(command -v brew)"
+else
+    print -u2 "Homebrew not found; skipping Brewfile install."
+    exit 0
+fi
+
+brewfile={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
+
+"$brew_bin" bundle check --no-upgrade --file "$brewfile" >/dev/null 2>&1 \
+    || "$brew_bin" bundle install --no-upgrade --file "$brewfile"

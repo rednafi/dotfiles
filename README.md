@@ -4,32 +4,50 @@
 ## Bootstrap
 
 ```sh
-mkdir -p ~/.local/share
-git clone https://github.com/rednafi/dotfiles.git ~/.local/share/chezmoi
-cd ~/.local/share/chezmoi
-/opt/homebrew/bin/brew bundle --file Brewfile
-/opt/homebrew/bin/chezmoi apply
+brew install chezmoi
+chezmoi init --apply --verbose https://github.com/rednafi/dotfiles.git
 ```
 
 Open a new zsh shell.
 
-## Maintain
+`chezmoi apply` installs missing Homebrew packages from `Brewfile` on macOS
+when the `Brewfile` changes. It uses `--no-upgrade`; package upgrades stay
+manual.
+
+## Daily Use
+
+Pull and apply the latest committed dotfiles:
+
+```sh
+chezmoi update --verbose
+```
+
+Preview before applying:
+
+```sh
+chezmoi git pull -- --autostash --rebase
+chezmoi diff
+chezmoi apply --verbose
+```
 
 Check local package drift:
 
 ```sh
-brew bundle check --file Brewfile --verbose
+brew bundle check --no-upgrade --file "$(chezmoi source-path)/Brewfile" --verbose
 brew outdated --greedy
-brew bundle cleanup --file Brewfile
+brew bundle cleanup --file "$(chezmoi source-path)/Brewfile"
 ```
 
-Apply dotfile changes after reviewing them:
+Edit source dotfiles directly:
+
+```sh
+chezmoi edit --apply ~/.zshrc
+```
+
+Import a live file back into source:
 
 ```sh
 chezmoi add ~/.zshrc
-chezmoi apply --dry-run --verbose
-chezmoi diff
-chezmoi apply --verbose
 ```
 
 Commit from the source repo:
@@ -38,6 +56,6 @@ Commit from the source repo:
 chezmoi cd
 git status --short
 git add -A
-git commit -m "update dotfiles"
+git commit -m "Update dotfiles"
 git push
 ```
