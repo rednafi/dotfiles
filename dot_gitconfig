@@ -4,9 +4,9 @@
 [includeIf "gitdir:~/canvas/werk/"]
 	path = ~/.gitconfig-werk
 [core]
-	editor = vim
+	editor = micro
 [sequence]
-	editor = vim
+	editor = micro
 [diff]
 	tool = vimdiff
 [difftool]

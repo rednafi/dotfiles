@@ -41,12 +41,12 @@ unset _dir _dotfiles_path_dirs _dotfiles_existing_path_dirs _dotfiles_clean_path
 export PATH
 
 export GOPATH="$HOME/go"
-export EDITOR="vim"
-export VISUAL="vim"
-export GIT_EDITOR="vim"
-export SUDO_EDITOR="vim"
-export GH_EDITOR="vim"
-export KUBE_EDITOR="vim"
+export EDITOR="micro"
+export VISUAL="code --wait"
+export GIT_EDITOR="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
+export GH_EDITOR="$EDITOR"
+export KUBE_EDITOR="$EDITOR"
 export CLICOLOR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
