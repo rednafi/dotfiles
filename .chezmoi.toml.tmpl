@@ -1,6 +1,4 @@
 {{- $machineName := promptStringOnce . "machineName" "machineName" .chezmoi.hostname -}}
-{{- $role := promptStringOnce . "role" "role" "pers" -}}
 
 [data]
     machineName = {{ $machineName | quote }}
-    role = {{ $role | quote }}

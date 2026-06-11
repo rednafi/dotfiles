@@ -6,9 +6,6 @@ set -euo pipefail
 
 [[ "$(uname -s)" == "Darwin" ]] || exit 0
 
-# Animation tweaks are pointless on a headless server.
-[[ {{ .role | quote }} != "server" ]] || exit 0
-
 fast="0.05"
 near_instant="0.01"
 
