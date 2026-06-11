@@ -5,8 +5,16 @@
 
 ```sh
 brew install chezmoi
-chezmoi init --apply --verbose https://github.com/rednafi/dotfiles.git
+chezmoi init --apply \
+    --promptString machineName=<name> \
+    --promptString role=<werk|pers|server> \
+    https://github.com/rednafi/dotfiles.git
 ```
+
+`machineName` becomes the macOS hostname and defaults to the current one. `role`
+picks the default git identity (`werk` gets the work email, everything else gets
+the personal one) and `server` machines skip the UI tweaks. Both answers persist
+in `~/.config/chezmoi/chezmoi.toml`, so rerunning `chezmoi init` won't ask again.
 
 Open a new zsh shell.
 
@@ -48,6 +56,12 @@ Import a live file back into source:
 
 ```sh
 chezmoi add ~/.zshrc
+```
+
+Re-import every drifted managed file at once:
+
+```sh
+chezmoi re-add
 ```
 
 Commit from the source repo:
