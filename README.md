@@ -14,7 +14,7 @@ Open a new zsh shell.
 when the `Brewfile` changes. It uses `--no-upgrade`; package upgrades stay
 manual.
 
-## Daily Use
+## Daily use
 
 Pull and apply the latest committed dotfiles:
 
