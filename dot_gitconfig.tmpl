@@ -1,3 +1,10 @@
+[include]
+{{- if eq .role "werk" }}
+	path = ~/.gitconfig-werk
+{{- else }}
+	path = ~/.gitconfig-pers
+{{- end }}
+
 [includeIf "gitdir:~/canvas/pers/"]
 	path = ~/.gitconfig-pers
 
