@@ -15,6 +15,9 @@
 typeset -U path cdpath fpath
 
 _dotfiles_path_dirs=(
+    /opt/homebrew/opt/rustup/bin
+    /usr/local/opt/rustup/bin
+    "$HOME/.cargo/bin"
     /opt/homebrew/bin
     /opt/homebrew/opt/sqlite/bin
     /opt/homebrew/opt/coreutils/libexec/gnubin
