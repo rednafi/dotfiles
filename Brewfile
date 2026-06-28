@@ -37,6 +37,7 @@ brew "telnet"
 brew "tldr"
 brew "uv"
 brew "watch"
+brew "zoxide"
 brew "zsh"
 
 cask "aldente"

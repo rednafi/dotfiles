@@ -49,6 +49,7 @@ export GH_EDITOR="$EDITOR"
 export KUBE_EDITOR="$EDITOR"
 export CLICOLOR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export _ZO_MAXAGE=200000
 
 # Enhanced directory navigation (adds ~/canvas to cd search path)
 [[ -d "$HOME/canvas" ]] && cdpath=("$HOME/canvas" "${cdpath[@]}")
@@ -224,6 +225,13 @@ if command -v direnv >/dev/null 2>&1; then
     if [[ -z "${chpwd_functions[(r)_direnv_hook]+1}" ]]; then
         chpwd_functions=(_direnv_hook $chpwd_functions)
     fi
+fi
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 3.8 Zoxide Integration
+# ──────────────────────────────────────────────────────────────────────────────
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
 fi
 
 # ╔═══════════════════════════════════════════════════════════════════════════╗
