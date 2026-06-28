@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Install/update the default stable Rust toolchain after Homebrew has installed rustup.
+# Brewfile checksum: {{ include "Brewfile" | sha256sum }}
+
+set -euo pipefail
+
+[[ "$(uname -s)" == "Darwin" ]] || exit 0
+
+rustup_bin=""
+for candidate in \
+    /opt/homebrew/opt/rustup/bin/rustup \
+    /usr/local/opt/rustup/bin/rustup \
+    "$HOME/.cargo/bin/rustup"; do
+    if [[ -x "$candidate" ]]; then
+        rustup_bin="$candidate"
+        break
+    fi
+done
+
+if [[ -z "$rustup_bin" ]] && command -v rustup >/dev/null 2>&1; then
+    rustup_bin="$(command -v rustup)"
+fi
+
+if [[ -z "$rustup_bin" ]]; then
+    printf '%s\n' "rustup not found; skipping Rust tooling install." >&2
+    exit 0
+fi
+
+export PATH="$(dirname "$rustup_bin"):$PATH"
+
+"$rustup_bin" set profile default
+"$rustup_bin" toolchain install stable --profile default
+"$rustup_bin" default stable
+"$rustup_bin" update stable
+"$rustup_bin" component add rustfmt clippy rust-src rust-analyzer --toolchain stable
