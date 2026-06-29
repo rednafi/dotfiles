@@ -43,7 +43,6 @@ brew "zsh"
 
 cask "aldente"
 cask "chatgpt"
-cask "claude-code"
 cask "codex"
 cask "font-geist"
 cask "font-geist-mono"
