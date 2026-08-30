@@ -80,10 +80,10 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicates to history file
 # ──────────────────────────────────────────────────────────────────────────────
 # 2.3 Prompt & Key Bindings
 # ──────────────────────────────────────────────────────────────────────────────
-# Simple two-line prompt: username@hostname:path on first line, $ on second
+# Simple two-line prompt: username@omphalos:path on first line, $ on second
 precmd() { print }  # Add blank line before prompt
 
-PS1="%{%F{yellow}%}%n@%{%f%}%{%F{yellow}%}%m:%{%F{cyan}%}% %(5~|%-1~/.../%3~|%4~)
+PS1="%{%F{yellow}%}%n@%{%f%}%{%F{yellow}%}omphalos:%{%F{cyan}%}% %(5~|%-1~/.../%3~|%4~)
 %{%f%}$ "
 
 bindkey -e  # Emacs key bindings

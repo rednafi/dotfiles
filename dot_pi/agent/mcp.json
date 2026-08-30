@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "dynamic-value": {
+      "url": "https://agent-gateway-service.dashapi.com/v1/mcp/experimentation-mcp",
+      "auth": "oauth",
+      "approveTools": [
+        "Create*",
+        "Update*",
+        "Rollout*"
+      ]
+    },
+    "observability": {
+      "url": "https://agent-gateway-service.dashapi.com/v1/mcp/observability-mcp-mcp-server",
+      "auth": "oauth",
+      "approveTools": [
+        "obs_grafana_update_dashboard"
+      ]
+    },
+    "slack": {
+      "url": "https://agent-gateway-service.dashapi.com/v1/mcp/slack",
+      "auth": "oauth",
+      "approveTools": [
+        "slack_send_*",
+        "slack_schedule_*",
+        "slack_add_reaction",
+        "slack_create_canvas",
+        "slack_update_canvas"
+      ]
+    }
+  },
+  "imports": [
+    "claude-code"
+  ]
+}
