@@ -1,6 +1,8 @@
 <!-- -*- mode: markdown -*- -->
 # dotfiles
 
+See [Migrating from GNU stow to chezmoi](https://rednafi.com/misc/chezmoi/) for the background and rationale behind this setup.
+
 ## Bootstrap
 
 ```sh
