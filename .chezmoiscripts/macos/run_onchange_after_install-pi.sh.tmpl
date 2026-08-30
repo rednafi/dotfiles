@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Install Pi and its globally configured packages.
+# Pi CLI: @earendil-works/pi-coding-agent@0.84.4
+# MCP adapter: pi-mcp-adapter@2.26.0
+
+set -euo pipefail
+
+[[ "$(uname -s)" == "Darwin" ]] || exit 0
+
+if ! command -v npm >/dev/null 2>&1; then
+    printf '%s\n' "npm not found; skipping Pi installation." >&2
+    exit 0
+fi
+
+pi_package="@earendil-works/pi-coding-agent@0.84.4"
+adapter_package="pi-mcp-adapter@2.26.0"
+
+if ! command -v pi >/dev/null 2>&1; then
+    npm install --global --ignore-scripts "$pi_package"
+fi
+
+adapter_manifest="$HOME/.pi/agent/npm/node_modules/pi-mcp-adapter/package.json"
+adapter_version=""
+if [[ -f "$adapter_manifest" ]]; then
+    adapter_version="$(node -e 'process.stdout.write(require(process.argv[1]).version)' "$adapter_manifest")"
+fi
+
+if [[ "$adapter_version" != "2.26.0" ]]; then
+    pi install "npm:$adapter_package"
+fi
