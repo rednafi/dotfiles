@@ -1,6 +1,18 @@
 {
   "lastChangelogVersion": "0.84.4",
   "theme": "dark",
+  "autocompleteMaxVisible": 10,
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol",
+  "defaultThinkingLevel": "medium",
+  "modelThinkingLevels": {
+    "openai-codex/gpt-5.6-sol": "medium",
+    "anthropic/claude-opus-5": "medium"
+  },
+  "enabledModels": [
+    "gpt-5.6-sol",
+    "claude-opus-5"
+  ],
   "packages": [
     "npm:pi-mcp-adapter"
   ]
