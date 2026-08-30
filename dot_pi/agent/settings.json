@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.84.4",
-  "theme": "dark",
+  "theme": "catppuccin-mocha",
   "autocompleteMaxVisible": 10,
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
@@ -14,6 +14,15 @@
     "claude-opus-5"
   ],
   "packages": [
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    {
+      "source": "git:https://github.com/hasit/pi-community-themes@v0.5.0",
+      "extensions": [],
+      "skills": [],
+      "prompts": [],
+      "themes": [
+        "+themes/catppuccin-mocha.json"
+      ]
+    }
   ]
 }
