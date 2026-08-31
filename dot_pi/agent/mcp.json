@@ -9,6 +9,16 @@
         "Rollout*"
       ]
     },
+    "pedregal-dv": {
+      "url": "https://agent-gateway-service.dashapi.com/v1/mcp/agentic-experimentation",
+      "auth": "oauth",
+      "approveTools": [
+        "Create*",
+        "Update*",
+        "Rollout*",
+        "Delete*"
+      ]
+    },
     "observability": {
       "url": "https://agent-gateway-service.dashapi.com/v1/mcp/observability-mcp-mcp-server",
       "auth": "oauth",
