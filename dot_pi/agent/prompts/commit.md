@@ -24,7 +24,7 @@ Create one appropriate Git commit from the current work. Arguments: `$ARGUMENTS`
    - no fabricated issue references or test claims;
    - when attribution is enabled, end with exactly one `Co-authored-by: Codex <noreply@openai.com>` trailer, separated from the body by one blank line;
    - when attribution is disabled, do not add that trailer;
-   - follpw conventional commit structure
+   - follow conventional commit structure
 6. Write the complete proposed commit message to a temporary file and open that file in the user's editor. Prefer `$VISUAL`, then `$EDITOR`; preserve configured arguments such as `code --wait`. Wait for the editor to close. The user may revise, extend, or abort by emptying the file.
 7. Re-read the edited message. If it is empty, stop without committing. Validate that its attribution matches the selected option and ask before changing any deliberate user edit. Show the final staged summary and commit subject.
 8. Commit with `git commit --file <edited-file>`. Do not amend, rebase, force-push, or push unless explicitly requested.

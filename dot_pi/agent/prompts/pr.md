@@ -21,7 +21,7 @@ Prepare a pull request for the current branch. Arguments: `$ARGUMENTS`
 4. Determine the correct default base from the remote repository and ensure the comparison is based on a fresh view of that branch. Do not silently rebase or rewrite commits.
 5. Build a truthful title and body from the actual commits and diff:
    - add exactly three simple points explaining what it does;
-   - no emdash, semicolon, or overly long comma spliced sentences;
+   - no em dash, semicolon, or overly long comma-spliced sentences;
    - always reference the relevant linear ticket;
    - and nothing else, the body should be short.
 6. Attribution handling:
