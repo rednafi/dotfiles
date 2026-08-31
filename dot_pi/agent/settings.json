@@ -14,12 +14,7 @@
     "claude-opus-5"
   ],
   "packages": [
-    "npm:pi-mcp-adapter",
-    "npm:@narumitw/pi-plan-mode",
-    "npm:@narumitw/pi-goal",
-    "npm:pi-web-access",
-    "npm:@pi-kaush/pi-welcome-screen",
-    "npm:pi-subagents"
+    "npm:pi-mcp-adapter"
   ],
   "hideThinkingBlock": false
 }
