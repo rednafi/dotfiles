@@ -2,32 +2,38 @@
 description: Commit the current changes
 argument-hint: "[--no-attr] [instructions]"
 ---
-# Create a reviewed commit
+# Commit changes
 
-Create one appropriate Git commit from the current work. Arguments: `$ARGUMENTS`
+Create one Git commit. Arguments: `$ARGUMENTS`
 
-## Options
+Options:
+- Attribution is on by default.
+- `--no-attr` turns it off. Remove the flag before using the other arguments.
+- Use the other arguments as commit guidance.
 
-- Attribution is enabled by default.
-- If `--no-attr` appears anywhere in the arguments, remove that flag from the remaining instructions and do not add Codex attribution.
-- Treat every other argument as additional guidance for selecting changes or writing the commit message.
+Steps:
+1. Read `AGENTS.md`, `CLAUDE.md`, and other commit rules that apply.
+2. Check the branch, recent commits, `git status`, all diffs, and untracked files.
+3. Choose one clear commit scope. Ask if the scope is unclear.
+4. Do not stage unrelated files, generated files, secrets, or user files.
+5. Never discard changes.
+6. Run focused checks when practical. Only report checks you ran.
+7. Stage only the chosen files or hunks.
+8. Review `git diff --cached`. Run `git diff --cached --check`. Stop if nothing is staged.
+9. Write a conventional commit message. Use a short command-style subject. Add a body only when it helps.
+10. Do not invent issue links, facts, or test results.
+11. When attribution is on, add this trailer once:
 
-## Workflow
+   `Co-authored-by: Codex <noreply@openai.com>`
 
-1. Read all applicable global and repository instructions, including `AGENTS.md`, `CLAUDE.md`, and commit-specific guidance. Inspect `git status`, staged and unstaged diffs, the current branch, recent commit style, and any untracked files.
-2. Do not stage unrelated, generated, secret, or user-owned files. Never discard changes. If the intended commit scope is ambiguous or cannot be separated safely, ask before staging.
-3. Run focused validation appropriate to the staged changes when practical. Do not claim checks that were not run.
-4. Stage only the intended files or hunks. Review `git diff --cached` and `git diff --cached --check`. Stop if nothing is staged.
-5. Draft a commit message matching repository conventions:
-   - concise imperative subject;
-   - explanatory body only when useful;
-   - no fabricated issue references or test claims;
-   - when attribution is enabled, end with exactly one `Co-authored-by: Codex <noreply@openai.com>` trailer, separated from the body by one blank line;
-   - when attribution is disabled, do not add that trailer;
-   - follow conventional commit structure
-6. Write the complete proposed commit message to a temporary file and open that file in the user's editor. Prefer `$VISUAL`, then `$EDITOR`; preserve configured arguments such as `code --wait`. Wait for the editor to close. The user may revise, extend, or abort by emptying the file.
-7. Re-read the edited message. If it is empty, stop without committing. Validate that its attribution matches the selected option and ask before changing any deliberate user edit. Show the final staged summary and commit subject.
-8. Commit with `git commit --file <edited-file>`. Do not amend, rebase, force-push, or push unless explicitly requested.
-9. Report the commit hash, subject, files committed, checks run, and remaining working-tree changes. Never state that the tree is clean without checking.
+   Put one blank line before it. Do not add it when attribution is off.
+12. Save the full message in a temporary file.
+13. Open the file with `$VISUAL`, then `$EDITOR`. Keep editor arguments such as `code --wait`.
+14. Wait for the user to review it. An empty file means cancel.
+15. Read the file again. Check the attribution. Ask before changing a user edit.
+16. Show the staged summary and final subject.
+17. Run `git commit --file <edited-file>`.
+18. Do not amend, rebase, force-push, or push unless asked.
+19. Report the commit hash, subject, files, checks, and remaining changes. Check before saying the tree is clean.
 
-Do not bypass hooks. If a hook modifies files or the commit fails, inspect and report the resulting state rather than blindly retrying.
+Do not bypass hooks. If a hook changes files or the commit fails, inspect the result. Do not retry without checking.

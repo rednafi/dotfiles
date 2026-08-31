@@ -1,67 +1,60 @@
 ---
-description: Review the current diff or a target for correctness bugs and cleanups
+description: Review the current diff or a target for bugs and cleanups
 argument-hint: "[low|medium|high|max] [--fix] [target]"
 ---
-# Review code changes
+# Review code
 
-Review the changed code as a senior engineer. Prioritize real correctness bugs, then justified reuse, simplification, efficiency, abstraction-level, and repository-convention findings.
+Review the change as a senior engineer. Find real bugs first. Then check reuse, simplicity, speed, shared design, and repo rules. Arguments: `$ARGUMENTS`
 
-Arguments: `$ARGUMENTS`
+Options:
+- Effort can be `low`, `medium`, `high`, or `max`. The default is `medium`.
+- `--fix` allows fixes after you report the findings.
+- The remaining argument is the target. It can be a pull request, branch, range, path, or commit.
 
-Interpret an optional first argument of `low`, `medium`, `high`, or `max` as review effort. Default to `medium`. Interpret `--fix` as permission to apply verified findings after reporting them. Any remaining argument is the review target: a PR number or URL, branch, commit range, path, or other target.
+Scope:
+- Use the target when given.
+- Otherwise use `git diff @{upstream}...HEAD`.
+- Fall back to `main...HEAD` or `HEAD~1` when needed.
+- Include `git diff HEAD` if local changes exist or the first diff is empty.
+- Read nearby code, callers, tests, rules, and history when needed.
 
-## Phase 0: Establish scope
+Effort:
+- At `low`, make one careful pass. Report only clear runtime bugs.
+- At `medium` or above, check every item below.
+- Use separate finder and checker agents when they are available.
+- If agents are not available, do the work in one context and say so.
+- At `high` or `max`, make one more fresh pass.
+- Match the work to the diff size. Do not invent findings.
 
-- For an explicit target, obtain and review its diff.
-- Otherwise inspect `git diff @{upstream}...HEAD`, falling back to `main...HEAD` or `HEAD~1` when necessary.
-- Include `git diff HEAD` when uncommitted changes exist or the range diff is empty.
-- Treat the resulting diff as the review scope, but read enclosing functions, callers, callees, tests, project instructions, and history when needed to verify a finding.
+Check for bugs:
+1. Check conditions, boundaries, null access, zero values, and missing `await`. Check wrong variables, hidden errors, bad checks, and platform failures.
+2. Guards, cleanup, checks, tests, error paths, or behavior lost when code was removed.
+3. Broken contracts between callers and callees. Check return values, errors, order, timing, and parallel work.
+4. Language and library traps. Check threads, object life, escaping, timezones, numbers, and data formats.
+5. Wrappers that call the wrong object or fail to pass through required behavior.
 
-## Phase 1: Find candidates
+Check code quality:
+6. New code that should use an existing helper.
+7. Extra state, deep nesting, copied code, dead code, or needless layers.
+8. Repeated work, repeated I/O, needless waiting, slow work on a hot path, or objects kept too long.
+9. A local fix that belongs in shared code.
+10. Clear rule breaks in `AGENTS.md`, `CLAUDE.md`, or other repo files. Quote the rule and file path.
 
-At `low` effort, make one careful line-by-line diff pass and report only obvious, high-confidence runtime bugs visible from the changed code.
+Keep a finding only when you can prove the cause. Give a real failure case or a clear cost. Remove copies of the same finding.
 
-At `medium` or higher effort, cover every angle below. If an active subagent/delegation tool is available, run independent finder reviews concurrently and use separate verification passes. Otherwise perform every angle sequentially yourself and explicitly say the review was single-context.
+Do not report style taste, guesses, old unrelated problems, or weak test requests. A test finding needs a real risk or a written repo rule. Return no findings if none hold up.
 
-### Correctness angles
+For each finding, include:
+- File and exact line.
+- Severity: `critical`, `high`, `medium`, or `low`.
+- Short summary.
+- Failure case or cost.
+- Small fix.
 
-1. **Line-by-line diff scan:** Look for wrong or inverted conditions, off-by-one errors, null or undefined dereferences, falsy-zero mistakes, missing `await`, wrong-variable copy/paste, swallowed errors, malformed validation, and platform-specific failures.
-2. **Removed behavior:** For deleted or replaced code, identify the invariant it enforced and verify that the new code preserves it. Watch for dropped guards, error paths, validation, cleanup, and meaningful tests.
-3. **Cross-file behavior:** Inspect callers and callees of changed functions for broken preconditions, return shapes, exceptions, ordering, timing, and parallel changes.
-4. **Language and framework pitfalls:** Check realistic pitfalls specific to the language and framework, including concurrency, lifetime, escaping, timezone, numeric, and serialization issues.
-5. **Wrappers and adapters:** Ensure proxies, caches, decorators, and adapters delegate to the intended wrapped object and forward the complete behavior callers rely on.
+Use this format:
 
-### Quality angles
+`path/to/file.ext:123 [severity] - summary`
 
-6. **Reuse:** Identify new code that duplicates an existing helper or shared mechanism and name what should be reused.
-7. **Simplification:** Identify redundant state, needless indirection, deep nesting, copy-paste variation, or dead code, and name the simpler equivalent.
-8. **Efficiency:** Identify repeated I/O or computation, avoidably sequential independent work, hot-path blocking, and retained closures or objects that waste memory.
-9. **Altitude:** Identify local special cases that should instead be solved in the shared underlying abstraction.
-10. **Repository conventions:** Check applicable `AGENTS.md`, `CLAUDE.md`, and other repository instructions. Report only clear violations, quoting the exact rule and its source path.
+List the worst findings first. If there are none, say so. Note any tests you could not run.
 
-For `high` and `max`, make an additional fresh sweep for findings not already identified. Scale investigation depth with diff size rather than inventing findings to meet a quota.
-
-Every candidate must name:
-
-- file and precise line;
-- severity (`critical`, `high`, `medium`, or `low`);
-- concise summary;
-- a concrete failure scenario for correctness bugs, or a concrete maintenance/efficiency cost for cleanup findings.
-
-Do not report pure style preferences, vague speculation, pre-existing issues unrelated to changed code, or missing tests unless they expose a concrete regression risk or violate an explicit repository rule.
-
-## Phase 2: Verify and deduplicate
-
-Deduplicate findings that describe the same defect and location. Re-read the relevant diff and surrounding code for each candidate. Keep a finding only when the mechanism is supported by the code and a realistic trigger or concrete cost can be stated. When subagents are available, use an independent verifier; otherwise self-check carefully.
-
-Correctness findings outrank cleanup findings when limiting output. Return no findings rather than manufacturing weak ones.
-
-## Output
-
-List verified findings first, ordered by severity. Use this format:
-
-`path/to/file.ext:123 [severity] — summary`
-
-Follow each with the concrete failure scenario or cost and a concise suggested fix. If nothing survives verification, say so explicitly and mention any residual testing uncertainty.
-
-Do not modify files unless `--fix` was supplied. With `--fix`, report the verified list first, apply each safe fix, skip anything that changes intended behavior or reaches far outside the reviewed diff, run focused checks, and finish with fixed/skipped outcomes.
+Do not edit files unless `--fix` was given. With `--fix`, report findings before editing. Apply only safe fixes in scope. Run focused checks. Report what you fixed and skipped.
