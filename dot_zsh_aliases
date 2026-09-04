@@ -78,28 +78,6 @@ _docker_available() {
 command -v tsh >/dev/null 2>&1 && alias tk="tsh kubectl"
 [[ -x "$HOME/.local/bin/jetbox" ]] && alias jetbox="$HOME/.local/bin/jetbox"
 
-# Pi
-unalias pi 2>/dev/null
-pi() {
-    if [[ ! -t 0 || ! -t 1 ]]; then
-        command pi "$@"
-        return $?
-    fi
-
-    local saved_tty exit_status
-    saved_tty="$(stty -g)" || return
-
-    {
-        stty cols 120
-        command pi "$@"
-        exit_status=$?
-    } always {
-        stty "$saved_tty"
-    }
-
-    return "$exit_status"
-}
-
 # Misc
 ,clear-junk() {
     local dir profile free_before free_after reclaimed cleaned
