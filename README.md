@@ -19,7 +19,8 @@ again.
 Git identity follows the directory: repos under `~/canvas/werk/` use the work email
 and repos under `~/canvas/pers/` use the personal one.
 
-Open a new zsh shell.
+Open a new Fish shell. The macOS bootstrap registers Homebrew Fish in
+`/etc/shells` and makes it the default login shell.
 
 `chezmoi apply` installs missing Homebrew packages from `Brewfile` on macOS
 when the `Brewfile` changes. It uses `--no-upgrade`; package upgrades stay
