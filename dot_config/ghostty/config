@@ -8,7 +8,7 @@ font-thicken = true
 background-opacity = 0.95
 background-blur-radius = 20
 
-shell-integration = zsh
+shell-integration = fish
 cursor-style = bar
 cursor-style-blink = true
 shell-integration-features = no-cursor
