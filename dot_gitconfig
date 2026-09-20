@@ -8,9 +8,12 @@
 [sequence]
 	editor = micro
 [diff]
-	tool = vimdiff
+	tool = zed
+	algorithm = histogram
 [difftool]
 	prompt = false
+[difftool "zed"]
+	cmd = zed --wait --diff "$LOCAL" "$REMOTE"
 [merge]
 	tool = vimdiff
 [mergetool]

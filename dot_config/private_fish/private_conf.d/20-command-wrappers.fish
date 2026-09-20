@@ -12,14 +12,9 @@ if status is-interactive
         command rm -iv $argv
     end
 
-    if command ls --color=auto -d . >/dev/null 2>&1
-        function ls --wraps ls
-            command ls --color=auto $argv
-        end
-    else
-        function ls --wraps ls
-            command ls -G $argv
-        end
+    # This machine uses macOS/BSD ls; avoid probing ls on every shell startup.
+    function ls --wraps ls
+        command ls -G $argv
     end
 
     if type -q bat

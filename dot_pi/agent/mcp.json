@@ -44,16 +44,7 @@
     "linear": {
       "url": "https://mcp.linear.app/mcp",
       "auth": "oauth",
-      "approveTools": [
-        "save_*",
-        "create_*",
-        "delete_*",
-        "merge_diff",
-        "submit_diff_review",
-        "resolve_diff_thread",
-        "share_issue",
-        "unshare_issue"
-      ]
+      "approveTools": false
     },
     "datadog": {
       "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp",

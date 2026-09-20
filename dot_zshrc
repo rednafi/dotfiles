@@ -20,7 +20,7 @@ _dotfiles_path_dirs=(
     "$HOME/.cargo/bin"
     /opt/homebrew/bin
     /opt/homebrew/opt/sqlite/bin
-    /opt/homebrew/opt/coreutils/libexec/gnubin
+    /opt/homebrew/opt/uutils-coreutils/libexec/uubin
     /Applications/OrbStack.app/Contents/MacOS/xbin
     "$HOME/.local/bin"
     "$HOME/.local/share/uv/python"
@@ -53,6 +53,7 @@ export KUBE_EDITOR="$EDITOR"
 export CLICOLOR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export _ZO_MAXAGE=200000
+export PI_CACHE_RETENTION=long
 
 # Enhanced directory navigation (adds ~/canvas to cd search path)
 [[ -d "$HOME/canvas" ]] && cdpath=("$HOME/canvas" "${cdpath[@]}")
@@ -243,3 +244,10 @@ fi
 
 # Uncomment to display profiling results (requires zmodload zsh/zprof at top)
 # zprof
+
+# bun completions
+[ -s "/Users/rednafi/.bun/_bun" ] && source "/Users/rednafi/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
