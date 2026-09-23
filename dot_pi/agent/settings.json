@@ -6,18 +6,16 @@
   "defaultModel": "gpt-6-sol",
   "defaultThinkingLevel": "medium",
   "modelThinkingLevels": {
-    "openai-codex/gpt-5.6-sol": "medium",
-    "openai-codex/gpt-6-sol": "medium",
     "openai-codex/gpt-6-astra": "medium",
-    "anthropic/claude-opus-5": "medium",
-    "google/gemini-3.7-flash": "medium"
+    "openai-codex/gpt-6-sol": "medium",
+    "anthropic/claude-fable-5-1": "medium",
+    "anthropic/claude-opus-5-5": "medium"
   },
   "enabledModels": [
-    "gpt-6-sol",
-    "gpt-5.6-sol",
     "gpt-6-astra",
-    "claude-opus-5",
-    "gemini-3.7-flash"
+    "gpt-6-sol",
+    "claude-fable-5-1",
+    "claude-opus-5-5"
   ],
   "packages": [
     "npm:pi-mcp-adapter@2.27.0"
