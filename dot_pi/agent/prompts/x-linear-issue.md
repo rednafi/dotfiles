@@ -10,9 +10,9 @@ Create one Linear issue from `$ARGUMENTS` and the relevant conversation.
 1. If the request includes URLs, read them first. Ask for the problem or team if the context
    doesn't make them clear.
 2. Search Linear for duplicates before drafting.
-3. Read `/Users/rednafi/.agents/skills/whip/SKILL.md` and both of its references in full.
-   Apply Whip strictly to the title and tone. Run its trope audit and rewrite before saving.
-   Keep the four headings below even if Whip advises against them.
+3. Read /x-whip and both of its references in full. Apply /x-whip strictly to the title and
+   tone. Run its trope audit and rewrite before saving. Keep the four headings below even if
+   Whip advises against them.
 4. Write a specific, plain title. Use this description format and keep it short:
 
    ## What

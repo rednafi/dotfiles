@@ -25,6 +25,7 @@ yourself.
 2. Simplicity
    - Find extra state, copied code, deep nesting, dead code, or needless layers.
    - Name the simpler form.
+   - Comments should be simple. Follow /x-whip lingua strictly.
 3. Speed
    - Find repeated work, repeated I/O, needless waiting, hot-path delays, or state kept too
      long.
