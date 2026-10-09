@@ -2,6 +2,7 @@
 description: Update the grimoire worklog from GitHub activity
 argument-hint: "[YYYY-MM-DD]"
 ---
+
 # Update worklog
 
 Update `~/canvas/werk/grimoire/Worklog.md` for `${ARGUMENTS:-today}`.
@@ -30,7 +31,8 @@ Use `rednafi` as the GitHub handle. Do not ask for it.
 
 ## 3. Find PRs
 
-Run all repo queries in parallel. Use one background `gh` process for each query. Use `--limit 50`. Wait for all processes.
+Run all repo queries in parallel. Use one background `gh` process for each query. Use
+`--limit 50`. Wait for all processes.
 
 Keep results whose `updatedAt` falls on `DATE`. UTC is fine.
 
@@ -62,7 +64,8 @@ for repo in "${repos[@]}"
 
 Do not use a space-separated string. Zsh will not split it as Bash does.
 
-A `gh` command may print a path to a JSON file. Check for this before parsing. If the output is a path, read that file with `jq`.
+A `gh` command may print a path to a JSON file. Check for this before parsing. If the output
+is a path, read that file with `jq`.
 
 ```sh
 jq . "$(cat capture_file)"
@@ -76,11 +79,14 @@ Do not use `--involves` with `-- -author:rednafi`. It misses some approved PRs.
 - Remove PRs where `author.login == rednafi`.
 - Put those PRs in the authored group instead.
 
-An approval counts as a review. A merge of another person's PR also counts when `rednafi` made the merge on `DATE`.
+An approval counts as a review. A merge of another person's PR also counts when `rednafi`
+made the merge on `DATE`.
 
-For possible merges, call `gh api repos/$repo/pulls/$pr`. Keep the PR when `merged_by.login == rednafi` and `merged_at` starts with `DATE`.
+For possible merges, call `gh api repos/$repo/pulls/$pr`. Keep the PR when
+`merged_by.login == rednafi` and `merged_at` starts with `DATE`.
 
-Check the real engagement date for every reviewed or commented PR. Do not trust `updatedAt` alone.
+Check the real engagement date for every reviewed or commented PR. Do not trust `updatedAt`
+alone.
 
 ```sh
 gh api "repos/$repo/pulls/$pr/reviews" \
@@ -91,7 +97,8 @@ gh api "repos/$repo/pulls/$pr/comments" \
   --jq '.[] | select(.user.login=="rednafi") | .created_at'
 ```
 
-Keep the PR only when one of these timestamps starts with `DATE`. Also keep a merge that passed the merge check above. This removes stale PRs changed by bots or rebases.
+Keep the PR only when one of these timestamps starts with `DATE`. Also keep a merge that
+passed the merge check above. This removes stale PRs changed by bots or rebases.
 
 ## 4. Format PRs
 
@@ -113,23 +120,23 @@ Ask this question.
 
 > Anything else to add for `${DATE}`? Meetings, RFCs, notes, or blockers?
 
-If the user adds items, write them as bullets. Wrap only real highlights in `==...==`. Highlights include major decisions, incidents, and RFC milestones.
+If the user adds items, write them as bullets. Wrap only real highlights in `==...==`.
+Highlights include major decisions, incidents, and RFC milestones.
 
 ## 6. Write the entry
 
-Keep the file in reverse date order. Add the new block above the newest heading. Keep the single blank line at the start of the file. Put the new heading after it.
+Keep the file in reverse date order. Add the new block above the newest heading. Keep the
+single blank line at the start of the file. Put the new heading after it.
 
 Use this format.
 
 ```markdown
-
-
 ## ${DATE}, ${DAY}
 
-- `COOKED` [<title>](<url>) | <Linear> (<STATE>)
-- `COOKED` [<title>](<url>)
-- `REVIEWED` [<title>](<url>) | <Linear>
-- `REVIEWED` [<title>](<url>)
+- `COOKED` [<title>](url) | <Linear> (<STATE>)
+- `COOKED` [<title>](url)
+- `REVIEWED` [<title>](url) | <Linear>
+- `REVIEWED` [<title>](url)
 - <extra item>
 - ==<highlight>==
 ```

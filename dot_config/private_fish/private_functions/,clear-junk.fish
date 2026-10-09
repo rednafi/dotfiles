@@ -4,9 +4,17 @@ function ,clear-junk --description 'Clear user, application, and development cac
         "$HOME/Library/Logs" \
         "$HOME/.Trash" \
         "$HOME/.cache" \
+        "$HOME/.claude/cache" \
+        "$HOME/.codex/cache" \
         "$HOME/.npm" \
         "$HOME/.nvm/.cache" \
+        "$HOME/.bun/install/cache" \
+        "$HOME/.local/share/pnpm/store" \
+        "$HOME/.pnpm-store" \
+        "$HOME/.yarn/berry/cache" \
         "$HOME/Library/pnpm/store" \
+        "$HOME/.gradle/caches" \
+        "$HOME/.m2/repository" \
         "$HOME/.cargo/registry/cache" \
         "$HOME/.cargo/registry/index" \
         "$HOME/.cargo/registry/src" \
@@ -21,6 +29,12 @@ function ,clear-junk --description 'Clear user, application, and development cac
         "$HOME/Library/Application Support/Google/Chrome/extensions_crx_cache" \
         "$HOME/Library/Application Support/Google/Chrome/component_crx_cache" \
         "$HOME/Library/Application Support/Google/GoogleUpdater/crx_cache" \
+        "$HOME/Library/Application Support/Claude/Cache" \
+        "$HOME/Library/Application Support/Claude/Code Cache" \
+        "$HOME/Library/Application Support/Claude/GPUCache" \
+        "$HOME/Library/Application Support/Claude/DawnGraphiteCache" \
+        "$HOME/Library/Application Support/Claude/DawnWebGPUCache" \
+        "$HOME/Library/Application Support/Claude/Crashpad/completed" \
         "$HOME/Library/Application Support/Slack/Cache" \
         "$HOME/Library/Application Support/Slack/Service Worker/CacheStorage" \
         "$HOME/Library/Application Support/Code/Cache" \
@@ -40,6 +54,13 @@ function ,clear-junk --description 'Clear user, application, and development cac
             "$profile/GPUCache" \
             "$profile/ShaderCache" \
             "$profile/Crash Reports"
+    end
+
+    # GOPATH may contain multiple workspaces; only the checksum database is disposable.
+    if type -q go
+        for go_path in (string split : -- (command go env GOPATH))
+            test -n "$go_path"; and set --append dirs "$go_path/pkg/sumdb"
+        end
     end
 
     set -l free_before (command df -k "$HOME" | command awk 'NR == 2 { print $4 }')
@@ -63,7 +84,7 @@ function ,clear-junk --description 'Clear user, application, and development cac
     type -q uv; and command uv cache clean >/dev/null 2>&1
     type -q pip3; and command pip3 cache purge >/dev/null 2>&1
     if type -q go
-        command go clean -cache -testcache >/dev/null 2>&1
+        command go clean -cache -testcache -fuzzcache >/dev/null 2>&1
         command go clean -modcache >/dev/null 2>&1
     end
     type -q npm; and command npm cache clean --force >/dev/null 2>&1

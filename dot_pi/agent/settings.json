@@ -1,9 +1,9 @@
 {
-  "lastChangelogVersion": "0.87.1",
-  "theme": "dark",
+  "lastChangelogVersion": "1.1.0",
+  "theme": "system",
   "autocompleteMaxVisible": 10,
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-sol",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-5-5",
   "defaultThinkingLevel": "medium",
   "modelThinkingLevels": {
     "openai-codex/gpt-6-astra": "medium",
@@ -17,9 +17,7 @@
     "claude-fable-5-1",
     "claude-opus-5-5"
   ],
-  "packages": [
-    "npm:pi-mcp-adapter@2.27.0"
-  ],
+  "packages": [],
   "hideThinkingBlock": false,
   "shellCommandPrefix": "eval \"$(zoxide init bash --cmd cd)\"",
   "compaction": {
@@ -27,5 +25,6 @@
   },
   "retry": {
     "enabled": true
-  }
+  },
+  "defaultProjectTrust": "never"
 }
