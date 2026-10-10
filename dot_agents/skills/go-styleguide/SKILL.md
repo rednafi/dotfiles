@@ -1,6 +1,7 @@
 ---
 name: go-styleguide
 description: Use when writing, reviewing, or explaining Go code style, idiomatic Go, Google Go readability guidance, naming, comments, package structure, tests, errors, interfaces, concurrency style, or styleguide tradeoffs. Loads the compiled Google Go Style Guide, Decisions, and Best Practices.
+disable-model-invocation: true
 ---
 
 # Go Styleguide

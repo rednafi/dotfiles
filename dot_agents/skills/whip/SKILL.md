@@ -14,6 +14,7 @@ metadata:
     whip: https://tropes.fyi/whip
     tropes: https://tropes.fyi/tropes-md
   upstream-version: 0.1.0
+disable-model-invocation: true
 ---
 
 # Whip

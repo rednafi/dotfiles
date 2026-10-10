@@ -1,6 +1,7 @@
 ---
 name: go-modernize
 description: Use when writing, reviewing, or modernizing Go code and the user wants modern Go idioms, version-aware language features, stdlib replacements, or cleanup of legacy Go patterns. Applies JetBrains modern Go guidance while respecting the project's declared Go version.
+disable-model-invocation: true
 ---
 
 # Go Modernize
