@@ -26,5 +26,6 @@
   "retry": {
     "enabled": true
   },
-  "defaultProjectTrust": "never"
+  "defaultProjectTrust": "always",
+  "quietStartup": "header"
 }

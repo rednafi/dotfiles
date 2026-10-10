@@ -1,3 +1,21 @@
 README.md
 Brewfile
 Brewfile.lock.json
+
+# pi: credentials, caches and runtime state -- never sync
+.pi/agent/auth.json
+.pi/agent/mcp-auth.json
+.pi/agent/mcp-cache.json
+.pi/agent/models-store.json
+.pi/agent/trust.json
+.pi/agent/backups
+.pi/agent/bin
+.pi/agent/git
+.pi/agent/install
+.pi/agent/missions
+.pi/agent/npm
+.pi/agent/sessions
+.pi/agent/tmp
+**/.DS_Store
+**/node_modules
+**/dist

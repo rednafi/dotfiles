@@ -27,6 +27,16 @@
     "datadog": {
       "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp",
       "exposure": "codemode"
+    },
+    "granola": {
+      "url": "https://mcp.granola.ai/mcp",
+      "exposure": "codemode",
+      "description": "Granola meeting notes: list, read, search meetings and transcripts"
+    },
+    "sentry": {
+      "url": "https://mcp.sentry.dev/mcp",
+      "exposure": "codemode",
+      "description": "Sentry issues, events, releases, and projects (Wolt org wolt-enterprises-oy)"
     }
   }
 }

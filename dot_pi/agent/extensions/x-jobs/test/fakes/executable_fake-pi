@@ -1,0 +1,27 @@
+#!/bin/sh
+# Fake `pi` for tests. Behaviour comes from $PI_JOBS_ROOT/fake-pi.env (so it
+# works under real launchd, which only passes PI_JOBS_* variables):
+#   MODE=ok|fail|flaky|hang|hang-ignore-term|big|empty|unicode|env|sleep
+#   FAIL_TIMES=N   (flaky)   MB=N (big)   SLEEP=N (sleep)
+[ -f "$PI_JOBS_ROOT/fake-pi.env" ] && . "$PI_JOBS_ROOT/fake-pi.env"
+MODE=${MODE:-ok}
+printf '%s\0' "$@" > "$PI_JOBS_ROOT/fake-pi.args"
+echo "$$ $(date +%s)" >> "$PI_JOBS_ROOT/fake-pi.calls"
+
+case "$MODE" in
+  ok) echo "# report"; echo "all good" ;;
+  fail) echo "boom: something broke" >&2; exit 1 ;;
+  flaky)
+    n=$(cat "$PI_JOBS_ROOT/fake-pi.count" 2>/dev/null || echo 0)
+    n=$((n + 1)); echo "$n" > "$PI_JOBS_ROOT/fake-pi.count"
+    if [ "$n" -le "${FAIL_TIMES:-2}" ]; then echo "flaky failure $n" >&2; exit 1; fi
+    echo "succeeded on call $n" ;;
+  hang) echo "$$" > "$PI_JOBS_ROOT/fake-pi.pid"; sleep 9999 & echo "$!" > "$PI_JOBS_ROOT/fake-pi.child"; wait ;;
+  hang-ignore-term) trap '' TERM; echo "$$" > "$PI_JOBS_ROOT/fake-pi.pid"; while :; do sleep 1; done ;;
+  big) head -c $(( ${MB:-1} * 1024 * 1024 )) /dev/zero | tr '\0' 'x'; head -c 100000 /dev/zero | tr '\0' 'e' >&2; echo "last error line" >&2; exit 1 ;;
+  empty) ;;
+  unicode) echo "✓ héllo 🎉 — ok" ;;
+  env) echo "CHILD=$PI_JOBS_CHILD"; echo "CWD=$(pwd)"; echo "PATH=$PATH" ;;
+  sleep) sleep "${SLEEP:-1}"; echo "slept ${SLEEP:-1}" ;;
+  *) echo "unknown MODE $MODE" >&2; exit 99 ;;
+esac

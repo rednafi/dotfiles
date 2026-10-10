@@ -1,0 +1,26 @@
+{
+  "name": "pi-jobs",
+  "version": "0.1.0",
+  "description": "Schedule background pi jobs on macOS. launchd runs them; a pi tool and /jobs command manage them.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["pi-package", "pi", "launchd", "scheduler"],
+  "os": ["darwin"],
+  "engines": { "node": ">=22.18" },
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "files": ["index.ts", "lib/", "bin/", "dist/", "README.md"],
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "scripts": {
+    "test": "TZ=America/New_York node --test --test-concurrency=1 'test/unit/*.test.ts' 'test/runner/*.test.ts' 'test/integration/*.test.ts' && TZ=UTC node --test 'test/unit/schedule.test.ts'",
+    "e2e": "PI_JOBS_E2E=1 node --test --test-concurrency=1 'test/e2e/*.test.ts'",
+    "eval": "node test/eval/run-eval.ts",
+    "prepack": "node --no-warnings scripts/build.ts",
+    "postpack": "rm -rf dist"
+  }
+}

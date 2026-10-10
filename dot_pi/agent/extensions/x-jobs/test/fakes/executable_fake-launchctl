@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+// Fake launchctl. State lives in $FAKE_LAUNCHCTL_STATE (JSON). Supports the
+// subcommands pi-jobs uses; kickstart really runs the job's ProgramArguments
+// with its EnvironmentVariables, like launchd would.
+// Failure injection: FAKE_LAUNCHCTL_FAIL=bootstrap,kickstart,... (comma list)
+import { execFileSync, spawn } from "node:child_process";
+import { existsSync, readFileSync, writeFileSync, openSync } from "node:fs";
+
+const stateFile = process.env.FAKE_LAUNCHCTL_STATE;
+if (!stateFile) {
+	console.error("FAKE_LAUNCHCTL_STATE not set");
+	process.exit(64);
+}
+const state = existsSync(stateFile) ? JSON.parse(readFileSync(stateFile, "utf8")) : { loaded: {}, calls: [] };
+const save = () => writeFileSync(stateFile, JSON.stringify(state, null, 2));
+const [cmd, ...args] = process.argv.slice(2);
+state.calls.push([cmd, ...args]);
+const fail = (process.env.FAKE_LAUNCHCTL_FAIL ?? "").split(",").includes(cmd);
+const labelOf = (t) => t.split("/").slice(2).join("/");
+const alive = (pid) => {
+	try {
+		process.kill(pid, 0);
+		return true;
+	} catch {
+		return false;
+	}
+};
+
+if (fail) {
+	save();
+	console.error(`${cmd} failed: 1: Operation not permitted (injected)`);
+	process.exit(1);
+}
+
+switch (cmd) {
+	case "print": {
+		save();
+		process.exit(state.loaded[labelOf(args[0])] ? 0 : 113);
+	}
+	case "bootout": {
+		const label = labelOf(args[0]);
+		if (!state.loaded[label]) {
+			save();
+			console.error("Boot-out failed: 3: No such process");
+			process.exit(3);
+		}
+		const pid = state.loaded[label].pid;
+		if (pid && alive(pid)) {
+			try {
+				process.kill(-pid, "SIGTERM");
+			} catch {}
+		}
+		delete state.loaded[label];
+		save();
+		process.exit(0);
+	}
+	case "bootstrap": {
+		const plist = args[1];
+		const json = JSON.parse(execFileSync("plutil", ["-convert", "json", "-o", "-", plist]).toString());
+		if (state.loaded[json.Label]) {
+			save();
+			console.error("Bootstrap failed: 5: Input/output error");
+			process.exit(5);
+		}
+		state.loaded[json.Label] = { plist, pid: null, lastExit: null };
+		save();
+		process.exit(0);
+	}
+	case "list": {
+		const lines = ["PID\tStatus\tLabel"];
+		for (const [label, j] of Object.entries(state.loaded)) {
+			const pid = j.pid && alive(j.pid) ? j.pid : "-";
+			lines.push(`${pid}\t${j.lastExit ?? 0}\t${label}`);
+		}
+		lines.push("-\t0\tcom.apple.unrelated");
+		save();
+		console.log(lines.join("\n"));
+		process.exit(0);
+	}
+	case "kickstart": {
+		const label = labelOf(args[args.length - 1]);
+		const j = state.loaded[label];
+		if (!j) {
+			save();
+			console.error("Could not find service");
+			process.exit(113);
+		}
+		const p = JSON.parse(execFileSync("plutil", ["-convert", "json", "-o", "-", j.plist]).toString());
+		const log = openSync(p.StandardOutPath, "a");
+		const child = spawn(p.ProgramArguments[0], p.ProgramArguments.slice(1), {
+			env: p.EnvironmentVariables,
+			cwd: p.WorkingDirectory,
+			stdio: ["ignore", log, log],
+			detached: true,
+		});
+		j.pid = child.pid;
+		child.unref();
+		save();
+		process.exit(0);
+	}
+	default:
+		save();
+		console.error(`fake-launchctl: unsupported ${cmd}`);
+		process.exit(64);
+}
